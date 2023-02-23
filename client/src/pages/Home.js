@@ -4,7 +4,10 @@ import HomeAnimation from '../components/HomeAnimation'
 const Home = () => {
   return (
     <div>
-        <HomeAnimation />
+        <div className='flex'>
+            <HomeAnimation />
+            <h2 className='font-merriw'>HELLO WORLD</h2>
+        </div>
     </div>
   )
 }
