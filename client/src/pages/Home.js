@@ -23,10 +23,10 @@ const Home = () => {
             </div>
         </section>
 
-      <section className='py-24'>
+      <div className='container h-96 my-24'>
         <h3 className='font-poppins text-lg px-12'>Some Courses of different categories:</h3>
-        <Swiper />
-      </section>
+          <Swiper />
+      </div>
     </main>
   )
 }

@@ -10,7 +10,7 @@ import {
 const ClassCard = () => {
   return (
     <Card className="w-12">
-      <CardHeader color="blue" className="relative h-1/2">
+      <CardHeader color="blue" className="relative h-72">
         <img
           src={require('../assets/images/logo.png')}
           alt="img-blur-shadow"
