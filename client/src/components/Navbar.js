@@ -6,7 +6,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const categories = [
-  { name: 'Web Development', description: 'Building or enhancing websites and web applications using programming tools and languages.', href: '#', icon: "uil:programming-language" },
+  { name: 'Web Development', description: 'Building websites using programming tools and languages.', href: '#', icon: "uil:programming-language" },
   { name: 'Business', description: 'Activities involved in producing, buying, selling, or trading goods or services for profit.', href: '#', icon: "mdi:business-outline" },
   { name: 'Finance & Accounting', description: 'Management of money and financial resources.', href: '#', icon: "mdi:finance" },
   { name: 'Arts & Designs', description: 'Creative disciplines focused on aesthetic expression and emotional responses.', href: '#', icon: "map:art-gallery" },
@@ -94,7 +94,7 @@ const Navbar = () => {
             </Link>
           </div>
           :
-          <div className="sx:hidden sm:hidden items-center justify-end lg:flex lg:flex-1 lg:w-0">
+          <div className="xs:hidden items-center justify-end lg:flex lg:flex-1 lg:w-0">
             <Menu as="div" className="relative ml-3">
               <div>
                 <Menu.Button className="flex  rounded-full h-8 w-8 justify-center items-center font-bold text-white bg-gray-800 text-sm focus:outline-none ">
