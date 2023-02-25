@@ -595,9 +595,9 @@ video {
   }
 }
 
-@media (min-width: 1536px){
+@media (min-width: 1895px){
   .container{
-    max-width: 1536px;
+    max-width: 1895px;
   }
 }
 
@@ -669,8 +669,8 @@ video {
   margin: -0.625rem;
 }
 
-.m-24{
-  margin: 6rem;
+.m-0{
+  margin: 0px;
 }
 
 .-mx-3{
@@ -691,11 +691,6 @@ video {
 .my-8{
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-
-.my-24{
-  margin-top: 6rem;
-  margin-bottom: 6rem;
 }
 
 .mb-2{
@@ -732,10 +727,6 @@ video {
 
 .mt-6{
   margin-top: 1.5rem;
-}
-
-.mt-24{
-  margin-top: 6rem;
 }
 
 .block{
@@ -780,42 +771,6 @@ video {
 
 .h-8{
   height: 2rem;
-}
-
-.h-96{
-  height: 24rem;
-}
-
-.h-\[100rem\]{
-  height: 100rem;
-}
-
-.h-\[1300rem\]{
-  height: 1300rem;
-}
-
-.h-\[50rem\]{
-  height: 50rem;
-}
-
-.h-full{
-  height: 100%;
-}
-
-.h-\[\]{
-  height: ;
-}
-
-.h-\[50vh\]{
-  height: 50vh;
-}
-
-.h-\[100vh\]{
-  height: 100vh;
-}
-
-.h-9{
-  height: 2.25rem;
 }
 
 .w-1\/2{
@@ -988,16 +943,8 @@ video {
   overflow: hidden;
 }
 
-.overflow-x-auto{
-  overflow-x: auto;
-}
-
 .overflow-y-auto{
   overflow-y: auto;
-}
-
-.overflow-x-hidden{
-  overflow-x: hidden;
 }
 
 .rounded{
@@ -1072,6 +1019,10 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.p-0{
+  padding: 0px;
+}
+
 .p-1{
   padding: 0.25rem;
 }
@@ -1134,11 +1085,6 @@ video {
 .py-2\.5{
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-}
-
-.py-24{
-  padding-top: 6rem;
-  padding-bottom: 6rem;
 }
 
 .py-3{
