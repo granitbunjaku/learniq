@@ -1,6 +1,5 @@
 import React from 'react'
 import HomeAnimation from '../components/HomeAnimation'
-import ClassCard from '../components/ClassCard';
 import Swiper from '../components/Swiper';
 import { Icon } from '@iconify/react';
 
@@ -103,9 +102,13 @@ const Home = () => {
               </div>
             </div>
         </section>
-
+        
       <div className='container pl-28 my-24'>
         <h3 className='font-poppins text-xl font-medium'>Some Courses of different categories:</h3>
+
+      <div className='container w-full'>
+        <h3 className='font-poppins text-lg px-12 '>Some Courses of different categories:</h3>
+
           <Swiper />
       </div>
 
