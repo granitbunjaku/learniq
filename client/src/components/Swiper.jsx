@@ -20,7 +20,7 @@ const SwiperComponent = () => {
   };
 
   return (
-    <Slider {...sliderSettings} className=" overflow-hidden">
+    <Slider {...sliderSettings} className="w-full">
       <ClassCard />
       <ClassCard />
       <ClassCard />
