@@ -2,7 +2,7 @@ import React from 'react'
 
 const Case = () => {
   return (
-    <div class="lg:flex lg:items-center px-24">
+    <div class="lg:flex lg:items-center px-12 items-center gap-12">
       <div class="lg:w-1/2">
         <img class="h-64 w-full object-cover lg:h-auto lg:w-auto rounded-lg" src="https://res.cloudinary.com/zenbusiness/q_auto,w_1200,h_800/v1/shared-assets/picture/getting-customers.jpg" alt="Placeholder image"/>
       </div>

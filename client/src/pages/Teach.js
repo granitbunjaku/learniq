@@ -120,10 +120,10 @@ export const Teach = () => {
             </div>
             </div>
 
-            <div className='container w-full mt-20'>
+            <div className='container w-full mt-20 xs:ml-14'>
                 <h3 className='font-poppins text-2xl px-12 text-center'>Successful cases</h3>
                 <hr class="w-48 h-1 mx-auto mt-4 mb-14 bg-gradient-to-r from-green-400 to-blue-500 border-0 rounded dark:bg-gray-700"></hr>
-                <div className='flex justify-item '>
+                <div className='flex justify-item'>
                     <CaseSlider />
                 </div>
             </div>

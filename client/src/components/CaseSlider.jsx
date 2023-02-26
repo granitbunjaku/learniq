@@ -20,7 +20,7 @@ const SwiperComponent = () => {
       };
 
     return (
-    <Slider {...settings} className="w-11/12">
+    <Slider {...settings} className="w-full">
         <Case />
         <Case />
         <Case />
