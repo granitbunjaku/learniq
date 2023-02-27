@@ -78,7 +78,7 @@ const Navbar = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
-          <Link to="/" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/become-mentor" className="text-sm font-semibold leading-6 text-gray-900">
             Become a Mentor
           </Link>
           <Link to="/pricing" className="text-sm font-semibold leading-6 text-gray-900">
@@ -199,7 +199,7 @@ const Navbar = () => {
                   )}
                 </Disclosure>
                 <Link
-                  to="/"
+                  to="/become-mentor"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Become a Mentor
