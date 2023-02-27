@@ -3,7 +3,6 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import Profile from './pages/Profile'
 import { Teach } from './pages/Teach'
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
