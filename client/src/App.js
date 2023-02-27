@@ -4,6 +4,8 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { Route, Routes } from 'react-router-dom';
+import { Teach } from './pages/Teach';
+import { Categories } from './pages/Categories';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Signup />} />
+        <Route path='/teach' element={<Teach />} />
+        <Route path='/category/:category' element={<Categories />} />
       </Routes>
     </div>
   );
