@@ -1,16 +1,10 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Dialog, Disclosure, Popover, Transition, Menu } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-
-const categories = [
-  { name: 'Web Development', description: 'Building websites using programming tools and languages.', href: '#', icon: "uil:programming-language" },
-  { name: 'Business', description: 'Activities involved in producing, buying, selling, or trading goods or services for profit.', href: '#', icon: "mdi:business-outline" },
-  { name: 'Finance & Accounting', description: 'Management of money and financial resources.', href: '#', icon: "mdi:finance" },
-  { name: 'Arts & Designs', description: 'Creative disciplines focused on aesthetic expression and emotional responses.', href: '#', icon: "map:art-gallery" },
-]
+import { TContext } from '../context/TranslateContext'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -19,6 +13,14 @@ function classNames(...classes) {
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [ user, setUser ] = useState(12)
+    const {t, i18n, lngs} = useContext(TContext)
+
+    const categories = [
+      { name: t('description.navbar.web_development.title'), description: t('description.navbar.web_development.desc'), href: 'category/web_development', icon: "uil:programming-language" },
+      { name: t('description.navbar.business.title'), description: t('description.navbar.business.desc'), href: 'category/business', icon: "mdi:business-outline" },
+      { name: t('description.navbar.finance.title'), description: t('description.navbar.finance.desc'), href: 'category/finance_accounting', icon: "mdi:finance" },
+      { name: t('description.navbar.design.title'), description: t('description.navbar.design.desc'), href: 'category/arts_design', icon: "map:art-gallery" },
+    ]
 
     return (
         <header className="bg-white border-b-[1px] border-gray-300">
@@ -42,7 +44,7 @@ const Navbar = () => {
             <Popover.Group className="hidden lg:flex lg:gap-x-12">
             <Popover className="relative">
                 <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-                  Categories
+                  {t('description.navbar.categories')}
                 <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                 </Popover.Button>
 
@@ -78,11 +80,11 @@ const Navbar = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
-          <Link to="/" className="text-sm font-semibold leading-6 text-gray-900">
-            Become a Mentor
+          <Link to="/teach" className="text-sm font-semibold leading-6 text-gray-900">
+            {t('description.navbar.become_mentor')}
           </Link>
           <Link to="/pricing" className="text-sm font-semibold leading-6 text-gray-900">
-            Pricing
+            {t('description.navbar.pricing')}
           </Link>
         </Popover.Group>
         {
@@ -117,7 +119,7 @@ const Navbar = () => {
                         to={`/profile`}
                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                       >
-                        Profile
+                        {t('description.navbar.profile')}
                       </Link>
                     )}
                   </Menu.Item>
@@ -127,7 +129,7 @@ const Navbar = () => {
                         to='/dashboard'
                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                       >
-                        Dashboard
+                        {t('description.navbar.dashboard')}
                       </Link>
                     )}
                   </Menu.Item>
@@ -136,7 +138,7 @@ const Navbar = () => {
                       <span
                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                       >
-                        Sign out
+                        {t('description.navbar.signout')}
                       </span>
                     )}
                   </Menu.Item>
@@ -145,6 +147,14 @@ const Navbar = () => {
             </Menu>
           </div>
         }
+
+        <div className="flex gap-2 ml-6">
+          {Object.keys(lngs).map((lng) => (
+            <button key={lng} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+              <img src={lngs[lng].flag} className="w-6 h-4"/>
+            </button>
+          ))}
+        </div>
         
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -178,7 +188,7 @@ const Navbar = () => {
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50">
-                          Categories
+                          {t('description.navbar.categories')}
                         <ChevronDownIcon
                           className={classNames(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
                           aria-hidden="true"
@@ -202,13 +212,13 @@ const Navbar = () => {
                   to="/"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Become a Mentor
+                  {t('description.navbar.become_mentor')}
                 </Link>
                 <Link
                   to="/prices"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Prices
+                  {t('description.navbar.pricing')}
                 </Link>
               </div>
               {user == null 
@@ -225,19 +235,19 @@ const Navbar = () => {
               <div>
                 <div className="py-2 mt-2">
                   <Link to={`/profile`} className="text-base font-medium text-gray-900 hover:text-gray-700">
-                    Profile
+                    {t('description.navbar.profile')}
                   </Link>
                 </div>
                 <div className="py-2">
                   <Link to='/dashboard' className="text-base font-medium text-gray-900 hover:text-gray-700">
-                    Dashboard
+                    {t('description.navbar.dashboard')}
                   </Link>
                 </div>
                 <div className="py-2">
                   <span
                     className="text-base cursor-pointer font-medium text-gray-900 hover:text-gray-700"
                     >
-                    Sign out
+                      {t('description.navbar.signout')}
                   </span>
                 </div>
               </div>

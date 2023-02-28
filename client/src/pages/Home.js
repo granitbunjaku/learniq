@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import HomeAnimation from '../components/HomeAnimation'
 import Swiper from '../components/Swiper';
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router-dom';
+import { TContext } from '../context/TranslateContext';
 
 const Home = () => {
 
+  const {t} = useContext(TContext)
+
   const stats = [
-    { id: 1, name: 'Students', value: '44 thousand' },
-    { id: 2, name: 'Instructors', value: '2 thousand' },
-    { id: 3, name: 'Classess', value: '10 thousand' },
+    { id: 1, name: t('description.home.students.name'), value: t('description.home.students.value') },
+    { id: 2, name: t('description.home.instructors.name'), value: t('description.home.instructors.value') },
+    { id: 3, name: t('description.home.classes.name'), value: t('description.home.classes.value') },
   ]
 
   const posts = [
     {
       id: 1,
-      title: 'Boost your conversion rate',
+      title: t('description.home.post.title'),
       href: '#',
       description:
         'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
@@ -28,7 +32,7 @@ const Home = () => {
     },
     {
       id: 1,
-      title: 'Boost your conversion rate',
+      title: t('description.home.post.title'),
       href: '#',
       description:
         'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
@@ -42,7 +46,7 @@ const Home = () => {
     },
     {
       id: 1,
-      title: 'Boost your conversion rate',
+      title: t('description.home.post.title'),
       href: '#',
       description:
         'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
@@ -59,27 +63,23 @@ const Home = () => {
 
   const features = [
     {
-      name: 'Virtual Learning',
-      description:
-      "Virtual Classroom Experience: Attend classes from anywhere, at any time, without having to commute",
+      name: t('description.home.all_features.first_feature.name'),
+      description: t('description.home.all_features.first_feature.desc'),
       icon: 'eos-icons:machine-learning-outlined'
     },
     {
-      name: 'Diverse Topics',
-      description:
-        'Wide Range of Topics: Choose from a variety of subjects and topics, from traditional academic subjects to niche interests.',
+      name: t('description.home.all_features.second_feature.name'),
+      description: t('description.home.all_features.second_feature.desc'),
       icon: "skill-icons:fediverse-dark"
     },
     {
-      name: 'Global Networking',
-      description:
-        'Connect with Teachers and Students: Network and collaborate with educators and peers from all over the world.',
+      name: t('description.home.all_features.third_feature.name'),
+      description: t('description.home.all_features.third_feature.desc'),
       icon: "tabler:social"
     },
     {
-      name: 'Flexible Scheduling',
-      description:
-        'Flexibility: Create or attend classes that fit your schedule and learning style.',
+      name: t('description.home.all_features.fourth_feature.name'),
+      description: t('description.home.all_features.fourth_feature.desc'),
       icon: "material-symbols:auto-schedule-outline-sharp"
   },
   ]
@@ -90,27 +90,24 @@ const Home = () => {
         <section className="flex lg:flex-row xs:flex-col xs:items-center lg:mt-16 w-full justify-center xs:gap-0 xs:text-center gap-16">
             <HomeAnimation />
             <div className='font-poppins w-1/2 flex flex-col items-center'>
-              <h1 className='font-bold mt-12 text-2xl text-center'>LearnIQ - Master New Skills with Ease</h1>
-              <h3 className='font-medium'>The Ultimate Learning Platform for Professionals and Lifelong Learners</h3>
-              <p className='my-8'>Our platform is designed to make learning easy, convenient, and fun. With intuitive navigation and personalized recommendations, you can quickly find the courses that are right for you and track your progress as you learn</p>
+              <h1 className='font-bold mt-12 text-2xl text-center'>{t('description.home.hero.title')}</h1>
+              <h3 className='font-medium'>{t('description.home.hero.subtitle')}</h3>
+              <p className='my-8'>{t('description.home.hero.desc')}</p>
               <div className='flex justify-center gap-4'>
-                <button class="bg-[#06a94d] hover:bg-[#059142] text-white font-bold py-3 px-4 rounded">
-                  Become A Mentor
-                </button>
+                <Link to="/teach" class="bg-[#06a94d] hover:bg-[#059142] text-white font-bold py-3 px-4 rounded">
+                  {t('description.home.become_mentor')}
+                </Link>
                 <button class="border-blue-600 border-2 hover:bg-blue-800 hover:text-white text-blue-600 font-bold py-3 px-4 rounded">
-                  Become A Learner
+                  {t('description.home.become_learner')}
                 </button>
               </div>
             </div>
         </section>
         
-      <div className='container pl-28 my-24'>
-        <h3 className='font-poppins text-xl font-medium'>Some Courses of different categories:</h3>
-      </div>
-      <div className='container w-full'>
-        <h3 className='font-poppins text-lg px-12 '>Some Courses of different categories:</h3>
+      <div className='container w-full mt-20'>
+        <h3 className='font-poppins text-lg px-12 mb-8'>{t('description.home.course_title')}</h3>
 
-          <Swiper />
+          <Swiper t={t}/>
       </div>
 
       <div className="bg-white py-24 sm:py-32">
@@ -131,9 +128,9 @@ const Home = () => {
       <div className="bg-white py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Success Stories</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{t('description.home.success_stories.title')}</h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
-            Some success stories from Students/Mentors of learnIQ
+            {t('description.home.success_stories.desc')}
           </p>
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -174,10 +171,10 @@ const Home = () => {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl lg:text-center">
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:text-center sm:w-full">
-                  Benefits With LearnIQ
+                {t('description.home.features.title')}
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-              With LearnIQ, you'll have access to thousands of high-quality courses and expert instructors, all in one place.
+                {t('description.home.features.desc')}
               </p>
               </div>
               <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
