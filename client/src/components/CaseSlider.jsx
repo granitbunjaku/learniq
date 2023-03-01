@@ -27,7 +27,7 @@ const SwiperComponent = () => {
         <Case />
         <Case />
         <Case />
-        <Case />
+        <Case />    
         <Case />
     </Slider>
     );
