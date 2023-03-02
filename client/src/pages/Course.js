@@ -67,15 +67,15 @@ const Course = () => {
             <div className='p-8'>
                 <img class="w-full h-full" src="https://www.freecodecamp.org/news/content/images/2021/06/javascriptfull.png" alt="" />
             </div>
-            <div className='border-2 flex flex-col py-8 items-center border-black min-h-72 w-3/4'>
+            <div className='shadow-xl flex flex-col py-8 items-center min-h-72 w-3/4'>
                 <div className='flex items-center justify-between px-4 w-full'>
                     <div>
                         <h3 className='font-medium text-xl'>Granit Bunjaku</h3>
                         <span className='font-medium'>Front-End Developer</span>
                     </div>
                     <div>
-                        <Link to='/' className='font-roboto text-lg font-medium underline'>
-                            View Profile {"->"}
+                        <Link to='/' className='font-roboto flex items-center text-lg font-medium underline'>
+                            View Profile <Icon icon="material-symbols:arrow-right-alt-rounded"/>
                         </Link>
                     </div>
                 </div>

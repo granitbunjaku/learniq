@@ -8,7 +8,7 @@ const Home = () => {
   const stats = [
     { id: 1, name: 'Students', value: '44 thousand' },
     { id: 2, name: 'Instructors', value: '2 thousand' },
-    { id: 3, name: 'Classess', value: '10 thousand' },
+    { id: 3, name: 'Courses', value: '10 thousand' },
   ]
 
   const posts = [

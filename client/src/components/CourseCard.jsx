@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 export const CourseCard = () => {
   return (
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+    <div class="xs:max-w-[60%] sm:max-w-[250px] bg-white border border-gray-200 rounded-lg shadow">
         <div>
             <img class="rounded-t-lg" src="https://www.freecodecamp.org/news/content/images/2021/06/javascriptfull.png" alt="" />
         </div>
-        <div class="p-6">
+        <div class="p-4">
             <div>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Noteworthy technology acquisitions 2021</h5>
             </div>
