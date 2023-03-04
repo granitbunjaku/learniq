@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Dropdown from './Dropdown'
+
+
 
 const CourseFilterMenu = () => {
+
   return (
-        <div className='m-12'>
-          <form className="w-full flex gap-4 xs:flex-col sm:flex-row px-8">
-            <div className='flex sm:w-2/5 gap-4'>
-              <select id="countries" className="bg-gray-50 border w-1/2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Choose A Category'>
-                <option selected>Choose a Category</option>
-                <option value="business">Business</option>
-                <option value="finance&accounting">Finance & Accounting</option>
-                <option value="arts&designs">Arts & Designs</option>
-              </select>
-              <select id="countries" className="bg-gray-50 border w-1/2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <div className='m-12 w-[90%] flex items-center gap-4 xs:flex-col sm:flex-row px-8'>
+            <Dropdown /> 
+            <div className='flex xs:w-full md:w-1/5 gap-4'>
+             <select id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>Filter By</option>
                 <option value="ASC">Newest-Oldest</option>
                 <option value="DESC">Oldest-Newest</option>
@@ -25,7 +23,6 @@ const CourseFilterMenu = () => {
                 <input type="search" id="default-search" className="block w-full font-poppins p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Courses..." required />
                 <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
             </div>
-        </form>
       </div>
   )
 }

@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TContext } from '../context/TranslateContext'
 
 const Case = () => {
+
+  const {t} = useContext(TContext)
+
   return (
     <div class="lg:flex lg:items-center px-12 items-center gap-12">
       <div class="lg:w-1/2">
@@ -8,7 +12,7 @@ const Case = () => {
       </div>
       <div class="lg:w-1/2 lg:ml-10">
         <h2 class="text-3xl font-bold text-gray-800 mb-6">John Smith</h2>
-        <p class="text-gray-600 mb-6">I cannot thank the online course platform enough for transforming my life. It has given me the opportunity to sell my courses to a global audience and build a thriving career. The website's user-friendly interface and comprehensive tools have made it easy for me to create and market my courses. Highly recommended! </p>
+        <p class="text-gray-600 mb-6">{t('description.teach.cases.desc')} </p>
         <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">Button</a>
       </div>
     </div>

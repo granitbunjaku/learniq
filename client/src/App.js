@@ -9,21 +9,26 @@ import { Teach } from './pages/Teach';
 import { Categories } from './pages/Categories';
 import Course from './pages/Course';
 import Courses from './pages/Courses';
+import { TranslateContext } from './context/TranslateContext';
+import CourseCategories from './pages/CourseCategories';
+import BecomeMentor from './pages/BecomeMentor';
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/become-mentor' element={<Teach />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Signup />} />
-        <Route path='/teach' element={<Teach />} />
-        <Route path='/courses' element={<Courses />} />
-        <Route path='/courses/:id' element={<Course />} />
-        <Route path='/category/:category' element={<Categories />} />
-      </Routes>
+      <TranslateContext>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Signup />} />
+          <Route path='/mentor' element={<Teach />} />
+          <Route path='/become-mentor' element={<BecomeMentor />} />
+          <Route path='/courses' element={<Courses />} />
+          <Route path='/courses/:id' element={<Course />} />
+          <Route path='/courses/category/:category' element={<CourseCategories />} />
+        </Routes>
+      </TranslateContext>
       <Footer />
     </div>
   );

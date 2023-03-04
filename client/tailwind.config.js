@@ -20,9 +20,12 @@ module.exports = {
 
       'xl': '1230px',
       // => @media (min-width: 1280px) { ... }
+
+      '1xl': '1536px',
+      // => @media (min-width: 1280px) { ... }
       
       // => @media (min-width: 1536px) { ... }
-      '2xl': '1895px',
+      '2xl': '1820px',
 
     },
     fontFamily: {

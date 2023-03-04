@@ -2,7 +2,7 @@ import React from 'react'
 import { CourseCard } from '../components/CourseCard'
 import CourseFilterMenu from '../components/CourseFilterMenu'
 
-const Courses = () => {
+const CourseCategories = () => {
   return (
     <div>
         <CourseFilterMenu />
@@ -20,4 +20,4 @@ const Courses = () => {
   )
 }
 
-export default Courses
+export default CourseCategories
