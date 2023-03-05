@@ -148,7 +148,7 @@ const Navbar = () => {
           </div>
         }
 
-        <div className="flex gap-2 ml-6">
+        <div className="lg:flex gap-2 ml-6 xs:hidden">
           {Object.keys(lngs).map((lng) => (
             <button key={lng} type="submit" onClick={() => i18n.changeLanguage(lng)}>
               <img src={lngs[lng].flag} className="w-6 h-4"/>
@@ -252,7 +252,13 @@ const Navbar = () => {
                 </div>
               </div>
               }
-              
+              <div className="flex w-full justify-center">
+                {Object.keys(lngs).map((lng) => (
+                  <button className="mt-8 ml-8" key={lng} type="submit" onClick={() => i18n.changeLanguage(lng)}>
+                    <img src={lngs[lng].flag} className="w-8 h-6"/>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </Dialog.Panel>

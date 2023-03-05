@@ -10,9 +10,9 @@ const Home = () => {
   const {t} = useContext(TContext)
 
   const stats = [
-    { id: 1, name: t('description.home.students.name'), value: t('description.home.students.value') },
-    { id: 2, name: t('description.home.instructors.name'), value: t('description.home.instructors.value') },
-    { id: 3, name: t('description.home.classes.name'), value: t('description.home.classes.value') },
+    { id: 1, name: 'Students', value: '44 thousand' },
+    { id: 2, name: 'Instructors', value: '2 thousand' },
+    { id: 3, name: 'Classess', value: '10 thousand' },
   ]
 
   const posts = [
