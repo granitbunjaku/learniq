@@ -3,9 +3,9 @@ import Sidebar from '../components/Sidebar'
 
 const PersonalSettings = () => {
   return (
-    <div class="flex flex-wrap flex-row">
+    <div class="flex flex-row">
         <Sidebar />
-        <div class="xs:w-1/2 lg:w-3/4 md:w-3/4 p-8">
+        <div class="w-full p-8">
             <h2 class="text-xl font-medium mb-6">Personal Settings</h2>
             <div class="flex flex-col">
             

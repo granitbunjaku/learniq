@@ -3,11 +3,11 @@ import Sidebar from "../components/Sidebar";
 
 function Profile() {
     return (
-        <div class="flex flex-wrap flex-row h-screen">
+        <div class="flex flex-row h-screen">
             
             <Sidebar />
 
-            <div class="w-1/2 lg:w-3/4 md:2/4 p-8">
+            <div class="w-full p-8 pb-36 overflow-y-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-white">
                 <div class="flex items-center space-x-4">
                 <img class="w-20 h-20 rounded-full" src="https://via.placeholder.com/150" alt="User profile image" />
                 <div>

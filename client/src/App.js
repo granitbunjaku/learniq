@@ -15,27 +15,31 @@ import PersonalSettings from './pages/PersonalSettings';
 import CreateCourse from './components/CreateCourse';
 import CourseCategories from './pages/CourseCategories';
 import BecomeMentor from './pages/BecomeMentor';
+import DefaultLayout from './layouts/DefaultLayout';
+import NoFooterLayout from './layouts/NoFooterLayout';
 
 function App() {
   return (
     <div className="App">
-      <TranslateContext>
-        <Navbar />
+      <TranslateContext>  
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Signup />} />
-          <Route path='/mentor' element={<Teach />} />
-          <Route path='/become-mentor' element={<BecomeMentor />} />
-          <Route path='/courses' element={<Courses />} />
-          <Route path='/courses/:id' element={<Course />} />
-          <Route path='/courses/category/:category' element={<CourseCategories />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/settings' element={<PersonalSettings />} />
-          <Route path='/courses/create' element={<CreateCourse />} />
+          <Route element={<DefaultLayout />}> 
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Signup />} />
+            <Route path='/mentor' element={<Teach />} />
+            <Route path='/become-mentor' element={<BecomeMentor />} />
+            <Route path='/courses' element={<Courses />} />
+            <Route path='/courses/:id' element={<Course />} />
+            <Route path='/courses/category/:category' element={<CourseCategories />} />
+            <Route path='/settings' element={<PersonalSettings />} />
+            <Route path='/courses/create' element={<CreateCourse />} />
+          </Route>
+          <Route element={<NoFooterLayout />}>
+            <Route path='/profile' element={<Profile />} />
+          </Route>
         </Routes>
       </TranslateContext>
-      <Footer />
     </div>
   );
 }
