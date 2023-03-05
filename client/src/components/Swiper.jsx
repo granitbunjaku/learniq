@@ -38,7 +38,7 @@ const SwiperComponent = () => {
  
 
   return (
-    <Slider {...sliderSettings} className="container">
+    <Slider {...sliderSettings} className="container ml-20 mb-16">
        <div className="px-4">
           <CourseCard />
         </div>

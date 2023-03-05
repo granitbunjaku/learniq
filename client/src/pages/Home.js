@@ -106,7 +106,6 @@ const Home = () => {
         
       <div className='container w-full mt-20'>
         <h3 className='font-poppins text-lg px-12 mb-8'>{t('description.home.course_title')}</h3>
-
           <Swiper t={t}/>
       </div>
 
