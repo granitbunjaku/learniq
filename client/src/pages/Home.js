@@ -94,7 +94,7 @@ const Home = () => {
               <h3 className='font-medium'>{t('description.home.hero.subtitle')}</h3>
               <p className='my-8'>{t('description.home.hero.desc')}</p>
               <div className='flex justify-center gap-4'>
-                <Link to="/teach" class="bg-[#06a94d] hover:bg-[#059142] text-white font-bold py-3 px-4 rounded">
+                <Link to="/mentor" class="bg-[#06a94d] hover:bg-[#059142] text-white font-bold py-3 px-4 rounded">
                   {t('description.home.become_mentor')}
                 </Link>
                 <button class="border-blue-600 border-2 hover:bg-blue-800 hover:text-white text-blue-600 font-bold py-3 px-4 rounded">
