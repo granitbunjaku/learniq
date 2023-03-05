@@ -8,6 +8,8 @@
     "@iconify/react": "^4.1.0",
     "@lottiefiles/react-lottie-player": "^3.5.2",
     "@material-tailwind/react": "^1.4.2",
+    "@paypal/react-paypal-js": "^7.8.2",
+    "@popperjs/core": "^2.11.6",
     "@react-oauth/google": "^0.8.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
