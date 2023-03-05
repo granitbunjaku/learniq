@@ -21,6 +21,7 @@ import Assignments from './pages/dashboard/Assignments';
 import Videos from './pages/dashboard/Videos';
 import DefaultLayout from './layouts/DefaultLayout';
 import NoFooterLayout from './layouts/NoFooterLayout';
+import NoNavbarLayout from './layouts/NoNavbarLayout';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
             <Route path='/courses/category/:category' element={<CourseCategories />} />
             <Route path='/settings' element={<PersonalSettings />} />
             <Route path='/courses/create' element={<CreateCourse />} />
+          </Route>
+          <Route element={<NoNavbarLayout />}>
             <Route path='/dashboard' element={<Dashboard /> } />
             <Route path='/dashboard/courses/:id' element={<MyCourse /> } />
             <Route path='/dashboard/courses/:id/students' element={<Students /> } />
