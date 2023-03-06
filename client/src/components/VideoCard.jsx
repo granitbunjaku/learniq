@@ -8,7 +8,7 @@ const VideoCard = () => {
   const text = "Description of Video ,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla aliquet porttitor lacus luctus accumsan tortor. Nec nam aliquam sem et tortor. Habitasse platea dictumst quisque sagittis. Lacus suspendisse faucibus interdum posuere lorem. Volutpat est velit egestas dui id ornare arcu odio ut. Diam sollicitudin tempor id eu nisl nunc mi ipsum. Erat velit scelerisque in dictum."
 
   return (
-    <div className='w-1/2 h-1/2 gap-4 flex items-center flex-col'>
+    <div className='w-1/2 h-1/2 gap-4 shadow-md flex items-center flex-col'>
         <Player
             playsInline
             poster="assets/poster.png"
