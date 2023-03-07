@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
+import AssignmentModal from '../../components/AssignmentModal'
 import LightBox from '../../components/LightBox'
 
 const Assignment = () => {
-
+    const [ showModal, setShowModal ] = useState(false)
     const [ showImage, setShowImage ] = useState(false)
 
   return (
@@ -11,7 +12,7 @@ const Assignment = () => {
         <div className='flex justify-around items-center'>
             <h3 className='text-center w-1/2 font-roboto text-xl font-medium'>Assignment Title</h3>
             <div>
-                <Icon icon="material-symbols:add-circle" className='cursor-pointer' height={50} width={50}/>
+                <Icon onClick={() => setShowModal(true)} icon="material-symbols:add-circle" className='cursor-pointer' height={50} width={50}/>
             </div>
         </div>
 
@@ -28,7 +29,7 @@ const Assignment = () => {
                 </div>
             </div>
         </div>
-
+        {showModal && <AssignmentModal showModal={showModal} setShowModal={setShowModal}/>}
         {showImage && <LightBox setShowImage={setShowImage} image="https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80"/>}
     </div>
   )

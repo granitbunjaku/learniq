@@ -12,7 +12,7 @@ const DashboardNav = () => {
     const createdClasses = ['JavaScript Course', 'Course Number 2', 'Python']
 
   return (
-    <nav className='w-1/4 relative float-left flex flex-col gap-40 bg-gray-500 border-r-4 border-black h-screen'>
+    <nav className='w-1/4 relative float-left flex flex-col gap-40 bg-indigo-400 border-r-4 border-black h-screen'>
             
         <div className='flex flex-col items-center mt-24'>
             <h3 className='text-2xl w-2/3 mx-auto font-poppins font-medium'>Created Courses</h3>
