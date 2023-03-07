@@ -11,7 +11,7 @@ import Course from './pages/Course';
 import Courses from './pages/Courses';
 import { TranslateContext } from './context/TranslateContext';
 import PersonalSettings from './pages/PersonalSettings';
-import CreateCourse from './components/CreateCourse';
+import CreateCourse from './pages/CreateCourse';
 import CourseCategories from './pages/CourseCategories';
 import BecomeMentor from './pages/BecomeMentor';
 import Dashboard from './pages/dashboard/Dashboard';
