@@ -2,6 +2,7 @@ import React from 'react'
 import { Breadcrumbs } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import PaypalButton from '../components/PaypalButton';
 
 const Course = () => {
   return (
@@ -32,9 +33,7 @@ const Course = () => {
                     <span className='font-semibold'>25&euro;/seat </span>
                     for <span className='font-semibold'>100</span> students
                 </p>
-                <button class="bg-[#06a94d] hover:bg-[#059142] text-white font-roboto font-bold py-3 w-52 rounded">
-                  Enroll Now!
-                </button>
+                <PaypalButton />
             </div>
             <div className='font-roboto md: xs:mb-4'>
                 <h2 className='border-b-4 font-roboto text-xl font-semibold border-[#06a94d]'>Description</h2>

@@ -11,7 +11,7 @@ import Course from './pages/Course';
 import Courses from './pages/Courses';
 import { TranslateContext } from './context/TranslateContext';
 import PersonalSettings from './pages/PersonalSettings';
-import CreateCourse from './components/CreateCourse';
+import CreateCourse from './pages/CreateCourse';
 import CourseCategories from './pages/CourseCategories';
 import BecomeMentor from './pages/BecomeMentor';
 import Dashboard from './pages/dashboard/Dashboard';
@@ -22,6 +22,9 @@ import Videos from './pages/dashboard/Videos';
 import DefaultLayout from './layouts/DefaultLayout';
 import NoFooterLayout from './layouts/NoFooterLayout';
 import NoNavbarLayout from './layouts/NoNavbarLayout';
+import Student from './pages/dashboard/Student';
+import CourseLayout from './layouts/CourseLayout';
+import Assignment from './pages/dashboard/Assignment';
 
 function App() {
   return (
@@ -42,10 +45,15 @@ function App() {
           </Route>
           <Route element={<NoNavbarLayout />}>
             <Route path='/dashboard' element={<Dashboard /> } />
-            <Route path='/dashboard/courses/:id' element={<MyCourse /> } />
-            <Route path='/dashboard/courses/:id/students' element={<Students /> } />
-            <Route path='/dashboard/courses/:id/assignments' element={<Assignments /> } />
-            <Route path='/dashboard/courses/:id/videos' element={<Videos /> } />
+            <Route element={<CourseLayout />}>
+              <Route path='/dashboard/courses/:id' element={<MyCourse /> } />
+              <Route path='/dashboard/courses/:id/students' element={<Students /> } />
+              <Route path='/dashboard/courses/:id/assignments' element={<Assignments /> } />
+              <Route path='/dashboard/courses/:id/videos' element={<Videos /> } />
+              <Route path='/dashboard/courses/:id/students/:id' element={<Student /> } />
+              <Route path='/dashboard/courses/:id/assignments/:id' element={<Assignment /> } />
+            </Route>
+            
           </Route>
           <Route element={<NoFooterLayout />}>
             <Route path='/profile' element={<Profile />} />

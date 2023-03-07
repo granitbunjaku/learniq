@@ -3,7 +3,6 @@ import { Link, Outlet } from 'react-router-dom';
 
 const Footer = () => {
 
-    if(window.location.href.includes('dashboard')) return
   return (
     <>
     <footer className="bg-white mt-24 rounded-lg shadow md:px-6 md:py-12 dark:bg-gray-900">
