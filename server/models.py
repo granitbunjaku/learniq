@@ -2,7 +2,6 @@ import datetime
 
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Float
 from sqlalchemy.orm import relationship
-from passlib.context import CryptContext
 
 from database import Base
 
@@ -10,6 +9,7 @@ class Roles(Base):
     __tablename__ = "roles"
     id = Column(Integer, primary_key=True, index=True)
     role = Column(String(20), index=True)
+
 class User(Base):
     __tablename__ = "users"
 
@@ -67,6 +67,8 @@ class Assignments(Base):
     points = Column(Float, index=True)
     deadline = Column(DateTime, index=True)
     course_id = Column(Integer, ForeignKey("courses.id"))
+
+
 class CourseStudents(Base):
     __tablename__ = "course_students"
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True, index=True)
