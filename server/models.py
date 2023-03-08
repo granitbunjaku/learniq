@@ -1,22 +1,77 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+import datetime
+
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Float
 from sqlalchemy.orm import relationship
 from passlib.context import CryptContext
 
 from database import Base
 
-
+class Roles(Base):
+    __tablename__ = "roles"
+    id = Column(Integer, primary_key=True, index=True)
+    role = Column(String(20), index=True)
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, index=True)
-    email = Column(String, index=True)
+    name = Column(String(20), index=True)
+    surname = Column(String(20), index=True)
+    email = Column(String(50), index=True, unique=True)
+    about = Column(String(250), index=True, nullable=True)
+    phone_number = Column(Integer, index=True, unique=True)
+    role_id = Column(Integer, ForeignKey("roles.id"))
+    rating = Column(Float, index=True, default=0)
+    paypal = Column(String, index=True, nullable=True)
     password = Column(String, index=True)
 
+    user_courses = relationship("Courses", back_populates="course_owner")
     # chats where user1 is participating
     user1_chats = relationship("Chat", foreign_keys="[Chat.user1]", back_populates="user1_infos")
     # chats where user2 is participating
     user2_chats = relationship("Chat", foreign_keys="[Chat.user2]", back_populates="user2_infos")
+
+class Categories(Base):
+    __tablename__ = "categories"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), index=True)
+    subcategories = relationship("SubCategories", back_populates="category")
+
+class SubCategories(Base):
+    __tablename__ = "subcategories"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), index=True)
+    category_id = Column(Integer, ForeignKey("categories.id"))
+    courses = relationship("Courses", back_populates="category")
+    category = relationship("Categories", back_populates="subcategories")
+
+class Courses(Base):
+    __tablename__ = "courses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(100), index=True)
+    price = Column(Float, index=True)
+    about = Column(String(250), index=True)
+    image = Column(String, index=True)
+    category_id = Column(Integer, ForeignKey("subcategories.id"))
+    owner_id = Column(Integer, ForeignKey("users.id"))
+
+    course_owner = relationship("User", back_populates="user_courses")
+    category = relationship("SubCategories", back_populates="courses")
+
+
+class Assignments(Base):
+    __tablename__ = "assignments"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), index=True)
+    description = Column(String(250), index=True)
+    points = Column(Float, index=True)
+    deadline = Column(DateTime, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"))
+class CourseStudents(Base):
+    __tablename__ = "course_students"
+    user_id = Column(Integer, ForeignKey("users.id"), primary_key=True, index=True)
+    course_id = Column(Integer, ForeignKey("courses.id"), primary_key=True, index=True)
+    joined_date = Column(DateTime, index=True, default=datetime.datetime.utcnow())
 
 
 class Chat(Base):

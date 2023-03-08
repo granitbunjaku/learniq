@@ -14,10 +14,11 @@ def token_response(token: str):
 
 
 # me kriju jwt
-def signJWT(userID: str):
+def signJWT(userID: int, userEmail: str):
     expiration_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
     payload = {
         "userID": userID,
+        "userEmail": userEmail,
         "exp": expiration_time
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
