@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 
@@ -57,36 +59,39 @@ class SubCategories(BaseModel):
     name: str
     category_id: int
 
+
 class SubCategoriesEdit(BaseModel):
     name: Optional[str]
     category_id: Optional[int]
     class Config:
         orm_mode = True
 
-class ReadCourses(BaseModel):
-    title: str
-    price: float
-    about: str
-    image: str
-    category_id: int
-    owner_id: int
-
-    class Config:
-        orm_mode = True
 
 class Assignments(BaseModel):
     name: str
     description: str
     points: float
-    course_id: str
+    deadline: datetime.date
+    course_id: int
 
     class Config:
         orm_mode = True
 
+
+class AssignmentEdit(BaseModel):
+    name: Optional[str]
+    description: Optional[str]
+    points: Optional[float]
+    deadline: Optional[datetime.date]
+
+    class Config:
+        orm_mode = True
+
+
 class CourseStudents(BaseModel):
     user_id: int
     course_id: int
-    joined_date: int
+    joined_date: datetime.date
 
     class Config:
         orm_mode = True

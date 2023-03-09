@@ -15,7 +15,7 @@ def token_response(token: str):
 
 # me kriju jwt
 def signJWT(userID: int, userEmail: str):
-    expiration_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
+    expiration_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
     payload = {
         "userID": userID,
         "userEmail": userEmail,
