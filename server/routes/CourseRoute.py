@@ -1,7 +1,8 @@
 from fastapi import APIRouter, FastAPI, HTTPException, Depends
-from typing import Dict
-import json
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
+from starlette.responses import JSONResponse
+
 import models
 import schemas
 from auth.jwtbearer import jwtBearer
@@ -20,7 +21,8 @@ def get_db():
         db.close()
 
 
-@course.post("/courses/create")
+# COURSES ENDPOINTS ----------
+@course.post("/courses")
 def create_course(course: schemas.Courses, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
     decoded_user = decodeJWT(token)
     old_user = db.get(models.User, decoded_user['userID'])
@@ -33,6 +35,7 @@ def create_course(course: schemas.Courses, db: Session = Depends(get_db), token:
         db.refresh(course)
         return course
     return HTTPException(401, "You must be admin to create an course!")
+
 
 @course.delete("/courses/{id}")
 def delete_course(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
@@ -48,32 +51,52 @@ def delete_course(id, db: Session = Depends(get_db), token: str = Depends(jwtBea
 
     return HTTPException(404, f"Course with id : {id} doesn't exist!")
 
+
 @course.get("/courses")
 def get_courses(db: Session = Depends(get_db)):
     courses = db.query(models.Courses).all()
     return courses
 
-# @course.get("/categories/{id}")
-# def get_category(id, db: Session = Depends(get_db)):
-#     category = db.get(models.Categories, id)
-#
-#     if category:
-#         return {"name": category.name, "subcategories": category.subcategories}
-#
-#     return HTTPException(404, f"Cateogry with id : {id} doesn't exist!")
-#
-# @course.put("/categories/{id}")
-# def update_category(id, category: schemas.Categories, db: Session = Depends(get_db)):
-#     old_category = db.get(models.Categories, id)
-#     if old_category:
-#         if category.name:
-#             new_category = category.dict(exclude_unset=True)
-#             for key, value in new_category.items():
-#                 setattr(old_category, key, value)
-#             db.add(old_category)
-#             db.commit()
-#             db.refresh(old_category)
-#             return {"name": old_category.name, "subcategories": old_category.subcategories}
-#         return HTTPException(400, f"Name field is required!")
-#
-#     return HTTPException(404, f"Cateogry with id : {id} doesn't exist!")
+
+@course.get("/courses/{id}")
+def get_course(id, db: Session = Depends(get_db)):
+    course = db.get(models.Courses, id)
+
+    if not course:
+        return HTTPException(404, f"Course with id : {id} doesn't exist!")
+
+    course.course_owner.password = "*******"
+
+    data = [
+        course,
+        course.course_owner,
+        course.category,
+        course.assignments
+    ]
+
+    return JSONResponse(content=jsonable_encoder(data[0]))
+
+
+@course.put("/courses/{id}")
+def update(id, course: schemas.Courses, db: Session = Depends(get_db)):
+    db_course = db.get(models.Courses, id)
+
+    if db_course:
+        if course:
+            course = course.dict(exclude_unset=True)
+            for key, value in course.items():
+                setattr(db_course, key, value)
+
+            db.add(db_course)
+            db.commit()
+            db.refresh(db_course)
+            data = [
+                db_course,
+                db_course.course_owner,
+                db_course.category
+            ]
+
+            return JSONResponse(content=jsonable_encoder(data[0]))
+        return HTTPException(400, f"Name field is required!")
+
+    return HTTPException(404, f"Cateogry with id : {id} doesn't exist!")
