@@ -68,7 +68,7 @@ async def get_user(id, db: Session = Depends(get_db)):
 
     if user:
         return schemas.User.from_orm(user)
-    return f"User doesn't exist"
+    return f"User with id {id} doesn't exist"
 
 
 @user.put("/user/{id}")
