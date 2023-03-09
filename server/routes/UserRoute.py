@@ -62,13 +62,13 @@ async def delete_user(id, token: str = Depends(jwtBearer()), db: Session = Depen
     return f"User doesn't exist"
 
 
-# @user.get("/user/{id}")
-# async def get_user(id, db: Session = Depends(get_db)):
-#     user = db.get(models.User, id)
-#
-#     if user:
-#         return schemas.User.from_orm(user)
-#     return f"User doesn't exist"
+@user.get("/user/{id}")
+async def get_user(id, db: Session = Depends(get_db)):
+    user = db.get(models.User, id)
+
+    if user:
+        return schemas.User.from_orm(user)
+    return f"User doesn't exist"
 
 
 @user.put("/user/{id}")
