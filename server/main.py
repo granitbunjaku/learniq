@@ -299,17 +299,20 @@ def get_courses(db: Session = Depends(get_db)):
     return courses
 
 @app.get("/courses/{id}")
-def get_category(id, db: Session = Depends(get_db)):
+def get_course  (id, db: Session = Depends(get_db)):
     course = db.get(models.Courses, id)
-   
+
+    if not course:
+        return HTTPException(404, f"Course with id : {id} doesn't exist!")
+
+    course.course_owner.password = "*******"
+
     data = [
         course,
         course.course_owner,
-        course.category
+        course.category,
+        course.assignments
     ]
-
-    if not course: 
-        return HTTPException(404, f"Course with id : {id} doesn't exist!")
 
     return JSONResponse(content=jsonable_encoder(data[0]))
 
@@ -337,6 +340,111 @@ def update(id, course: schemas.Courses, db: Session = Depends(get_db)):
         return HTTPException(400, f"Name field is required!")
 
     return HTTPException(404, f"Cateogry with id : {id} doesn't exist!")
+
+
+# ASSIGNMENTS ENDPOINTS ----------
+@app.post("/assignments/create")
+def create_assignment(assignment: schemas.Assignments, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+    decoded_user = decodeJWT(token)
+    new_assignment = models.Assignments(**assignment.dict())
+    course = db.get(models.Courses, new_assignment.course_id)
+
+    if course.owner_id == decoded_user['userID']:
+        db.add(new_assignment)
+        db.commit()
+        db.refresh(new_assignment)
+        return JSONResponse(content=jsonable_encoder(new_assignment))
+
+    return HTTPException(401, f"You must own the course to post assignments for it")
+
+@app.get("/assignments")
+def get_assignments(db: Session = Depends(get_db)):
+    assignments = db.query(models.Assignments).all()
+    return JSONResponse(content=jsonable_encoder(assignments))
+
+
+@app.get("/assignments/{id}")
+def get_assignment(id, db: Session = Depends(get_db)):
+    assignment = db.get(models.Assignments, id)
+
+    if assignment:
+        return JSONResponse(content=jsonable_encoder(assignment))
+
+    return HTTPException(404, f"Assignment with id : {id} doesn't exist!")
+
+
+@app.put("/assignments/{id}")
+def update_assignment(id, assignment: schemas.AssignmentEdit,db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+    decoded_user = decodeJWT(token)
+    old_assignment = db.get(models.Assignments, id)
+
+    if old_assignment:
+        if old_assignment.course.owner_id == decoded_user['userID']:
+            for key, value in assignment:
+                setattr(old_assignment, key, value)
+            db.add(old_assignment)
+            db.commit()
+            db.refresh(old_assignment)
+            return old_assignment
+
+        return HTTPException(401, f"You must own the assignment to edit it")
+
+    return HTTPException(404, f"Assignment with id : {id} doesn't exist!")
+
+
+@app.delete("/assignments/{id}")
+def delete_assignment(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+    decoded_user = decodeJWT(token)
+    assignment = db.get(models.Assignments, id)
+
+    if assignment:
+        if assignment.course.owner_id == decoded_user['userID']:
+            db.delete(assignment)
+            db.commit()
+            return f"Assignment with id : {id} was successfully deleted!"
+
+        return HTTPException(401, f"You must own the assignment to delete it")
+
+    return HTTPException(404, f"Assignment with id : {id} doesn't exist!")
+
+
+# @app.get("/subcategories")
+# def get_subcategories(db: Session = Depends(get_db)):
+#     subcategories = db.query(models.SubCategories).all()
+#     return subcategories
+#
+#
+# @app.get("/subcategories/{id}")
+# def get_subcategories(id, db: Session = Depends(get_db)):
+#     subcategory = db.get(models.SubCategories, id)
+#
+#     if subcategory:
+#         return subcategory
+#     return HTTPException(404, "Subcategory doesn't exist")
+#
+#
+# @app.delete("/subcategories/{id}")
+# async def delete_subcategory(id, db: Session = Depends(get_db)):
+#     subcategory = db.get(models.SubCategories, id)
+#     if subcategory:
+#         db.delete(subcategory)
+#         db.commit()
+#         return f"Subcategory with id : {id} was deleted successfully!"
+#     return f"Subcategory doesn't exist"
+#
+#
+# @app.put("/subcategories/{id}")
+# async def update_subcategory(id, user: schemas.SubCategoriesEdit, db: Session = Depends(get_db)):
+#     old_subcategory = db.get(models.SubCategories, id)
+#     if old_subcategory:
+#         new_subcategory = user.dict(exclude_unset=True)
+#         for key, value in new_subcategory.items():
+#             setattr(old_subcategory, key, value)
+#         db.add(old_subcategory)
+#         db.commit()
+#         db.refresh(old_subcategory)
+#         return old_subcategory
+#     return f"Subcategory doesn't exist"
 
 
 

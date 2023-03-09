@@ -57,6 +57,7 @@ class Courses(Base):
 
     course_owner = relationship("User", back_populates="user_courses")
     category = relationship("SubCategories", back_populates="courses")
+    assignments = relationship("Assignments", back_populates="course")
 
 
 class Assignments(Base):
@@ -68,6 +69,7 @@ class Assignments(Base):
     deadline = Column(DateTime, index=True)
     course_id = Column(Integer, ForeignKey("courses.id"))
 
+    course = relationship("Courses", back_populates="assignments")
 
 class CourseStudents(Base):
     __tablename__ = "course_students"
