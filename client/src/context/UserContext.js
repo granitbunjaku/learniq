@@ -1,6 +1,7 @@
 import React from 'react'
+import { createContext } from "react";
 
-export const UConext = React.createContext({});
+export const UserContext = createContext(null);
 
 const UserContext = (props) => {
     return (
