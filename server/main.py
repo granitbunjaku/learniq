@@ -11,10 +11,9 @@ from routes.UserRoute import user
 from fastapi.middleware.cors import CORSMiddleware
 from routes.SubmissionRoute import submission
 from paypal.checkout import payment_routes
+from routes.VideoRoute import video
 
 app = FastAPI()
-
-models.Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,6 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+models.Base.metadata.create_all(bind=engine)
 
 def get_db():
     try:
@@ -33,6 +33,7 @@ def get_db():
         db.close()
 
 
+app.include_router(video, prefix="/videos")
 app.include_router(chat)
 app.include_router(category)
 app.include_router(role)

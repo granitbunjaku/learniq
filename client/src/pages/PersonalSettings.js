@@ -1,7 +1,44 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Sidebar from '../components/Sidebar'
+import axios from 'axios'
+import { UserContext } from '../context/UserContext';
+import { useQuery } from 'react-query';
 
 const PersonalSettings = () => {
+    const { user, setUser } = useContext(UserContext)
+    const [ name, setName ] = useState("")
+    const [ surname, setSurname ] = useState("")
+    const [ about, setAbout ] = useState("")
+    const [ phone, setPhone ] = useState("")
+
+    const fetchData = async() => {
+        const res = await axios.get("http://localhost:8000/user/me", {
+            headers: { Authorization: `Bearer ${user.token}` }
+        })
+        
+        const data = res.data;
+        setName(data.name)
+        setSurname(data.surname)
+        setAbout(data.about)
+        setPhone(data.phone_number)
+
+        return data
+    }
+
+    fetchData()
+
+    const handleUpdate = async e => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target); 
+        const data = Object.fromEntries(formData.entries());
+
+        const res = await axios.put(`http://localhost:8000/user/${user?.id}`, data, {
+            headers: { Authorization: `Bearer ${user.token}` }
+        })
+    }
+
+
   return (
     <div class="flex flex-row">
         <Sidebar />
@@ -30,20 +67,53 @@ const PersonalSettings = () => {
             
             <div class="bg-white shadow-md rounded-lg p-4 mb-6">
                 <h3 class="text-lg font-medium mb-2">Change Email</h3>
-                <form>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2" for="current-email">Current Email</label>
-                    <input class="w-full border-gray-400 border-2 p-2 rounded" type="email" name="current-email" id="current-email" />
-                </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2" for="new-email">New Email</label>
-                    <input class="w-full border-gray-400 border-2 p-2 rounded" type="email" name="new-email" id="new-email" />
-                </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2" for="confirm-new-email">Confirm New Email</label>
-                    <input class="w-full border-gray-400 border-2 p-2 rounded" type="email" name="confirm-new-email" id="confirm-new-email" />
-                </div>
-                <button class="bg-gray-800 text-gray-100 px-4 py-2 rounded hover:bg-gray-700">Change Email</button>
+                <form onSubmit={handleUpdate}>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2" for="name">Name</label>
+                        <input 
+                        class="w-full border-gray-400 border-2 p-2 rounded" 
+                        type="text" 
+                        name="name" 
+                        id="name" 
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        />
+
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2" for="surname">Surname</label>
+                        <input 
+                        class="w-full border-gray-400 border-2 p-2 rounded" 
+                        type="text" 
+                        name="surname" 
+                        id="surname" 
+                        value={surname}
+                        onChange={e => setSurname(e.target.value)}
+                        />
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2" for="phone_number">Phone Number</label>
+                        <input 
+                        class="w-full border-gray-400 border-2 p-2 rounded" 
+                        type="text" 
+                        name="phone_number" 
+                        id="phone_number" 
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        />
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2" for="about">About</label>
+                        <textarea 
+                        class="w-full border-gray-400 border-2 p-2 rounded" 
+                        type="text" 
+                        name="about" 
+                        id="about" 
+                        value={about}
+                        onChange={e => setAbout(e.target.value)}
+                        />
+                    </div>
+                    <button class="bg-gray-800 text-gray-100 px-4 py-2 rounded hover:bg-gray-700">Change Email</button>
                 </form>
             </div>
             </div>

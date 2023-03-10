@@ -30,10 +30,10 @@ async def create(description: str = Form(...),course_id: int = Form(...), db: Se
         _video = models.Videos(description=description,course_id=course_id)
 
         contents = await video.read()
-        
+
         file_path = os.path.join("course_videos", f"{datetime.now()}{video.filename}")
-        
-        with open(file_path, "wb") as f: 
+
+        with open(file_path, "wb") as f:
             f.write(contents)
 
         _video.video = file_path
@@ -42,14 +42,14 @@ async def create(description: str = Form(...),course_id: int = Form(...), db: Se
         db.commit()
         db.refresh(_video)
         return JSONResponse(jsonable_encoder(_video))
-    
+
     return HTTPException(401, "You must be Student to create an Video!")
 
 
 @video.get('/')
 async def read(db: Session = Depends(get_db)):
     videos = db.query(models.Videos).all()
-    
+
     return JSONResponse(content=jsonable_encoder(videos))
 
 @video.put('/{id}')
@@ -85,7 +85,7 @@ async def read(id, db: Session = Depends(get_db)):
 
     if not submission:
         return HTTPException(404, f"Submission with id : {id} doesn't exist!")
-    
+
     return JSONResponse(content=jsonable_encoder(submission))
 
 
@@ -103,4 +103,3 @@ async def read(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer
         return "You must own a Video to delete it"
 
     return HTTPException(404, f"Video with id : {id} doesn't exist!")
-

@@ -43,8 +43,17 @@ const Login = () => {
             "password": e.target.password.value
         })
         .then(res => {
-            localStorage.setItem("jwt", JSON.stringify(res.data.access_token))
-            setUser(res.data.access_token)
+            localStorage.setItem("user", JSON.stringify({
+                "token": res.data.token.access_token,
+                "email": res.data.email,
+                "id": res.data.id
+            }))
+
+            setUser({
+                "token": res.data.token.access_token,
+                "email": res.data.email,
+                "id": res.data.id
+            })
             navigate("/")
         })
         .catch(e => {

@@ -88,24 +88,22 @@ const Home = () => {
 
   return (
     <main>
-        <section className="flex lg:flex-row xs:flex-col xs:items-center lg:mt-16 w-full justify-center xs:gap-0 xs:text-center gap-16">
-            <HomeAnimation />
-            <div className='font-poppins w-1/2 flex flex-col items-center'>
-              <h1 className='font-bold mt-12 text-2xl text-center'>{t('description.home.hero.title')}</h1>
-              <h3 className='font-medium'>{t('description.home.hero.subtitle')}</h3>
-              <p className='my-8'>{t('description.home.hero.desc')}</p>
-              <div className='flex justify-center gap-4'>
-                <Link to="/mentor" class="bg-[#06a94d] hover:bg-[#059142] text-white font-bold py-3 px-4 rounded">
-                  {t('description.home.become_mentor')}
-                </Link>
-                <button class="border-blue-600 border-2 hover:bg-blue-800 hover:text-white text-blue-600 font-bold py-3 px-4 rounded">
-                  {t('description.home.become_learner')}
-                </button>
-              </div>
+      <section className="flex lg:flex-row xs:flex-col xs:items-center lg:mt-16 w-full justify-center xs:gap-0 xs:text-center gap-16">
+          <HomeAnimation />
+          <div className='font-poppins w-1/2 flex flex-col items-center'>
+            <h1 className='font-bold mt-12 text-2xl text-center'>{t('description.home.hero.title')}</h1>
+            <h3 className='font-medium'>{t('description.home.hero.subtitle')}</h3>
+            <p className='my-8'>{t('description.home.hero.desc')}</p>
+            <div className='flex justify-center gap-4'>
+              <Link to="/mentor" class="bg-[#06a94d] hover:bg-[#059142] text-white font-bold py-3 px-4 rounded">
+                {t('description.home.become_mentor')}
+              </Link>
+              <button class="border-blue-600 border-2 hover:bg-blue-800 hover:text-white text-blue-600 font-bold py-3 px-4 rounded">
+                {t('description.home.become_learner')}
+              </button>
             </div>
-        </section>
-
-      {user && <>MR ROBOT</>}
+          </div>
+      </section>
         
       <div className='container w-full mt-20'>
         <h3 className='font-poppins text-lg px-12 mb-8'>{t('description.home.course_title')}</h3>
