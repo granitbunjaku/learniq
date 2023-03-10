@@ -25,41 +25,48 @@ import NoNavbarLayout from './layouts/NoNavbarLayout';
 import Student from './pages/dashboard/Student';
 import CourseLayout from './layouts/CourseLayout';
 import Assignment from './pages/dashboard/Assignment';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import UserContext from './context/UserContext';
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <div className="App">
-      <TranslateContext>  
-        <Routes>
-          <Route element={<DefaultLayout />}> 
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Signup />} />
-            <Route path='/mentor' element={<Teach />} />
-            <Route path='/become-mentor' element={<BecomeMentor />} />
-            <Route path='/courses' element={<Courses />} />
-            <Route path='/courses/:id' element={<Course />} />
-            <Route path='/courses/category/:category' element={<CourseCategories />} />
-            <Route path='/settings' element={<PersonalSettings />} />
-            <Route path='/courses/create' element={<CreateCourse />} />
-          </Route>
-          <Route element={<NoNavbarLayout />}>
-            <Route path='/dashboard' element={<Dashboard /> } />
-            <Route element={<CourseLayout />}>
-              <Route path='/dashboard/courses/:id' element={<MyCourse /> } />
-              <Route path='/dashboard/courses/:id/students' element={<Students /> } />
-              <Route path='/dashboard/courses/:id/assignments' element={<Assignments /> } />
-              <Route path='/dashboard/courses/:id/videos' element={<Videos /> } />
-              <Route path='/dashboard/courses/:id/students/:id' element={<Student /> } />
-              <Route path='/dashboard/courses/:id/assignments/:id' element={<Assignment /> } />
-            </Route>
-            
-          </Route>
-          <Route element={<NoFooterLayout />}>
-            <Route path='/profile' element={<Profile />} />
-          </Route>
-        </Routes>
-      </TranslateContext>
+      <QueryClientProvider client={queryClient}>
+        <UserContext>
+          <TranslateContext>  
+              <Routes>
+                <Route element={<DefaultLayout />}> 
+                  <Route path='/' element={<Home />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/register' element={<Signup />} />
+                  <Route path='/mentor' element={<Teach />} />
+                  <Route path='/become-mentor' element={<BecomeMentor />} />
+                  <Route path='/courses' element={<Courses />} />
+                  <Route path='/courses/:id' element={<Course />} />
+                  <Route path='/courses/category/:category' element={<CourseCategories />} />
+                  <Route path='/settings' element={<PersonalSettings />} />
+                  <Route path='/courses/create' element={<CreateCourse />} />
+                </Route>
+                <Route element={<NoNavbarLayout />}>
+                  <Route path='/dashboard' element={<Dashboard /> } />
+                  <Route element={<CourseLayout />}>
+                    <Route path='/dashboard/courses/:id' element={<MyCourse /> } />
+                    <Route path='/dashboard/courses/:id/students' element={<Students /> } />
+                    <Route path='/dashboard/courses/:id/assignments' element={<Assignments /> } />
+                    <Route path='/dashboard/courses/:id/videos' element={<Videos /> } />
+                    <Route path='/dashboard/courses/:id/students/:id' element={<Student /> } />
+                    <Route path='/dashboard/courses/:id/assignments/:id' element={<Assignment /> } />
+                  </Route>
+                  
+                </Route>
+                <Route element={<NoFooterLayout />}>
+                  <Route path='/profile' element={<Profile />} />
+                </Route>
+              </Routes>
+          </TranslateContext>
+        </UserContext>
+      </QueryClientProvider>
     </div>
   );
 }
