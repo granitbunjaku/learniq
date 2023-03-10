@@ -1,8 +1,9 @@
-from fastapi import APIRouter, FastAPI, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
-
+from datetime import datetime
+import os
 import models
 import schemas
 from auth.jwtbearer import jwtBearer
@@ -21,18 +22,27 @@ def get_db():
         db.close()
 
 @submission.post('/')
-async def create(submission: schemas.Submissions, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+async def create(description: str = Form(...), assignment_id: int = Form(...), db: Session = Depends(get_db), token: str = Depends(jwtBearer()), image: UploadFile = File(...)):
     decoded_user = decodeJWT(token)
     old_user = db.get(models.User, decoded_user['userID'])
 
-
     if old_user.role_id == 0:
-        submission = models.Submissions(**submission.dict())
+        submission = models.Submissions(description=description, assignment_id=assignment_id)
+
+        contents = await image.read()
+        
+        file_path = os.path.join("course_assignments", f"{datetime.now()}{image.filename}")
+        
+        with open(file_path, "wb") as f: 
+            f.write(contents)
+
         submission.user_id = old_user.id
+        submission.image = file_path
+
         db.add(submission)
         db.commit()
         db.refresh(submission)
-        return JSONResponse(content=jsonable_encoder(submission))
+        return JSONResponse(jsonable_encoder(submission))
     
     return HTTPException(401, "You must be Student to create an submission!")
 
@@ -44,14 +54,23 @@ async def read(db: Session = Depends(get_db)):
     return JSONResponse(content=jsonable_encoder(submissions))
 
 @submission.put('/{id}')
-async def update(id, submission: schemas.UpdateSubmission, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+async def update(id, description: str = Form(...), assignment_id: int = Form(...), db: Session = Depends(get_db), token: str = Depends(jwtBearer()), image: UploadFile = File(...)):
     db_submission = db.get(models.Submissions, id)
+
+    data = {"description": description, "assignment_id": assignment_id }
 
     if db_submission:
         if submission:
-            submission = submission.dict(exclude_unset=True)
-            for key, value in submission.items():
+            for key, value in data.items():
                 setattr(db_submission, key, value)
+
+            if image:
+                os.remove(db_submission.image)
+                contents = await image.read()
+                file_path = os.path.join("course_assignments", f"{datetime.now()}{image.filename}")
+                with open(file_path, "wb") as f:
+                    f.write(contents)
+                db_submission.image = file_path
 
             db.add(db_submission)
             db.commit()
@@ -83,6 +102,7 @@ async def read(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer
 
     if submission:
         if submission.user_id == decoded_user['userID']:
+            os.remove(submission.image)
             db.delete(submission)
             db.commit()
             return f"Submission with id : {id} was successfully deleted!"
