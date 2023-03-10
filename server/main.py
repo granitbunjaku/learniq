@@ -8,6 +8,7 @@ from routes.CourseRoute import course
 from routes.RoleRoute import role
 from routes.SubcategoryRoute import subcategory
 from routes.UserRoute import user
+from fastapi.middleware.cors import CORSMiddleware
 from routes.SubmissionRoute import submission
 from paypal.checkout import payment_routes
 
@@ -15,12 +16,22 @@ app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 def get_db():
     try:
         db = SessionLocal()
         yield db
     finally:
         db.close()
+
 
 app.include_router(chat)
 app.include_router(category)

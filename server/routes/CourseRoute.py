@@ -1,4 +1,8 @@
-from fastapi import APIRouter, FastAPI, HTTPException, Depends
+import os
+from datetime import datetime
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
@@ -23,13 +27,20 @@ def get_db():
 
 # COURSES ENDPOINTS ----------
 @course.post("/courses")
-def create_course(course: schemas.Courses, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+async def create_course(title: str = Form(...), price: float = Form(...), about: str = Form(...), category_id: int = Form(...), db: Session = Depends(get_db), token: str = Depends(jwtBearer()), file: UploadFile = File(...)):
     decoded_user = decodeJWT(token)
     old_user = db.get(models.User, decoded_user['userID'])
 
     if old_user.role_id == 2:
-        course = models.Courses(**course.dict())
+        course = models.Courses(title=title, price=price, about=about, category_id=category_id)
+
+        contents = await file.read()
+        file_path = os.path.join("courseimages", f"{datetime.now()}{file.filename}")
+        with open(file_path, "wb") as f:
+            f.write(contents)
+
         course.owner_id = old_user.id
+        course.image = file_path
         db.add(course)
         db.commit()
         db.refresh(course)
@@ -44,6 +55,7 @@ def delete_course(id, db: Session = Depends(get_db), token: str = Depends(jwtBea
 
     if course:
         if course.owner_id == decoded_user['userID']:
+            os.remove(course.image)
             db.delete(course)
             db.commit()
             return f"Course with id : {id} was successfully deleted!"
@@ -78,25 +90,32 @@ def get_course(id, db: Session = Depends(get_db)):
 
 
 @course.put("/courses/{id}")
-def update(id, course: schemas.Courses, db: Session = Depends(get_db)):
+async def update(id, title: str = Form(None), price: float = Form(None), about: str = Form(None), category_id: int = Form(None), db: Session = Depends(get_db), token: str = Depends(jwtBearer()), file: Optional[UploadFile] = File(None)):
     db_course = db.get(models.Courses, id)
+    data = {"title": title, "price" : price, "about" : about, "category_id" : category_id}
 
     if db_course:
-        if course:
-            course = course.dict(exclude_unset=True)
-            for key, value in course.items():
+        for key, value in data.items():
+            if value is not None:
                 setattr(db_course, key, value)
 
-            db.add(db_course)
-            db.commit()
-            db.refresh(db_course)
-            data = [
-                db_course,
-                db_course.course_owner,
-                db_course.category
-            ]
+        if file:
+            os.remove(db_course.image)
+            contents = await file.read()
+            file_path = os.path.join("courseimages", f"{datetime.now()}{file.filename}")
+            with open(file_path, "wb") as f:
+                f.write(contents)
+            db_course.image = file_path
 
-            return JSONResponse(content=jsonable_encoder(data[0]))
-        return HTTPException(400, f"Name field is required!")
+        db.add(db_course)
+        db.commit()
+        db.refresh(db_course)
+        data = [
+            db_course,
+            db_course.course_owner,
+            db_course.category
+        ]
+
+        return JSONResponse(content=jsonable_encoder(data[0]))
 
     return HTTPException(404, f"Cateogry with id : {id} doesn't exist!")
