@@ -19,7 +19,7 @@ def get_db():
 
 
 # SUBCATEGORIES ENDPOINTS ----------
-@subcategory.post("/subcategories/create")
+@subcategory.post("/")
 def create_subcategory(subcategory: schemas.SubCategories, db: Session = Depends(get_db)):
     new_subcategory = models.SubCategories(**subcategory.dict())
     db.add(new_subcategory)
@@ -28,13 +28,13 @@ def create_subcategory(subcategory: schemas.SubCategories, db: Session = Depends
     return new_subcategory
 
 
-@subcategory.get("/subcategories")
+@subcategory.get("/")
 def get_subcategories(db: Session = Depends(get_db)):
     subcategories = db.query(models.SubCategories).all()
     return subcategories
 
 
-@subcategory.get("/subcategories/{id}")
+@subcategory.get("/{id}")
 def get_subcategories(id, db: Session = Depends(get_db)):
     subcategory = db.get(models.SubCategories, id)
 
@@ -43,7 +43,7 @@ def get_subcategories(id, db: Session = Depends(get_db)):
     return HTTPException(404, "Subcategory doesn't exist")
 
 
-@subcategory.delete("/subcategories/{id}")
+@subcategory.delete("/{id}")
 async def delete_subcategory(id, db: Session = Depends(get_db)):
     subcategory = db.get(models.SubCategories, id)
     if subcategory:
@@ -53,7 +53,7 @@ async def delete_subcategory(id, db: Session = Depends(get_db)):
     return f"Subcategory doesn't exist"
 
 
-@subcategory.put("/subcategories/{id}")
+@subcategory.put("/{id}")
 async def update_subcategory(id, user: schemas.SubCategoriesEdit, db: Session = Depends(get_db)):
     old_subcategory = db.get(models.SubCategories, id)
     if old_subcategory:
