@@ -118,4 +118,4 @@ async def update(id, title: str = Form(None), price: float = Form(None), about: 
 
         return JSONResponse(content=jsonable_encoder(data[0]))
 
-    return HTTPException(404, f"Cateogry with id : {id} doesn't exist!")
+    return HTTPException(404, f"Course with id : {id} doesn't exist!")
