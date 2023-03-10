@@ -12,7 +12,6 @@ class Courses(BaseModel):
     title: str
     price: float
     about: str
-    image: str
     category_id: int
 
     class Config:

@@ -16,7 +16,7 @@ def get_db():
         yield db
     finally:
         db.close()
-
+ # Set this to the domain of your React app in production
 
 # CATEGORY ENDPOINTS ----------
 @category.post("/categories/create")
