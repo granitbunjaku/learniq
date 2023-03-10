@@ -44,6 +44,14 @@ async def create(description: str = Form(...),course_id: int = Form(...), db: Se
         return JSONResponse(jsonable_encoder(_video))
 
     return HTTPException(401, "You must be Student to create an Video!")
+
+
+@video.get('/')
+async def read(db: Session = Depends(get_db)):
+    videos = db.query(models.Videos).all()
+
+    return JSONResponse(content=jsonable_encoder(videos))
+
 @video.put('/{id}')
 async def update(id, description: str = Form(...), course_id: int = Form(...), db: Session = Depends(get_db), token: str = Depends(jwtBearer()), video: UploadFile = File(...)):
     db_video = db.get(models.Videos, id)
@@ -79,11 +87,8 @@ async def read(id, db: Session = Depends(get_db)):
         return HTTPException(404, f"Submission with id : {id} doesn't exist!")
 
     return JSONResponse(content=jsonable_encoder(submission))
-@video.get('/')
-async def read(db: Session = Depends(get_db)):
-    videos = db.query(models.Videos).all()
 
-    return JSONResponse(content=jsonable_encoder(videos))
+
 @video.delete('/{id}')
 async def read(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
     decoded_user = decodeJWT(token)

@@ -1,10 +1,9 @@
-import os
-from datetime import datetime
-from fastapi import APIRouter, FastAPI, HTTPException, Depends, Form, UploadFile, File
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
-
+from datetime import datetime
+import os
 import models
 import schemas
 from auth.jwtbearer import jwtBearer
@@ -44,6 +43,8 @@ async def create(description: str = Form(...), assignment_id: int = Form(...), d
         db.commit()
         db.refresh(submission)
         return JSONResponse(jsonable_encoder(submission))
+    
+    return HTTPException(401, "You must be Student to create an submission!")
 
 
 @submission.get('/')
@@ -101,6 +102,7 @@ async def read(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer
 
     if submission:
         if submission.user_id == decoded_user['userID']:
+            os.remove(submission.image)
             db.delete(submission)
             db.commit()
             return f"Submission with id : {id} was successfully deleted!"
