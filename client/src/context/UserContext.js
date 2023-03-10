@@ -1,13 +1,3 @@
-import React from 'react'
+import { createContext } from "react";
 
-export const UConext = React.createContext({});
-
-const UserContext = (props) => {
-    return (
-        <UConext.Provider>
-            {props.children}
-        </UConext.Provider>
-    )
-}
-
-export default UserContext
+export const UserContext = createContext(null);

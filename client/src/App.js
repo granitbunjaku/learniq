@@ -1,11 +1,10 @@
+import { useState, useEffect } from 'react';
 import './assets/css/tailwind.css';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { Route, Routes } from 'react-router-dom';
-import Footer from './components/Footer';
 import { Teach } from './pages/Teach';
 import Course from './pages/Course';
 import Courses from './pages/Courses';
@@ -25,15 +24,26 @@ import NoNavbarLayout from './layouts/NoNavbarLayout';
 import Student from './pages/dashboard/Student';
 import CourseLayout from './layouts/CourseLayout';
 import Assignment from './pages/dashboard/Assignment';
-import {QueryClient, QueryClientProvider} from 'react-query';
-import UserContext from './context/UserContext';
+import { QueryClient, QueryClientProvider} from 'react-query';
+import { UserContext } from './context/UserContext';
 const queryClient = new QueryClient();
 
+
 function App() {
+  const [ user, setUser ] = useState(null);
+
+  useEffect(() => {
+    const jwt = JSON.parse(localStorage.getItem('jwt'))
+
+    if(jwt !== null) {
+      setUser(jwt)
+    }
+  }, [])
+
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <UserContext>
+        <UserContext.Provider value={{user, setUser}}>
           <TranslateContext>  
               <Routes>
                 <Route element={<DefaultLayout />}> 
@@ -65,7 +75,7 @@ function App() {
                 </Route>
               </Routes>
           </TranslateContext>
-        </UserContext>
+        </UserContext.Provider>
       </QueryClientProvider>
     </div>
   );

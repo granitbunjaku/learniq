@@ -27,6 +27,7 @@ class User(BaseModel):
     role_id: int
     rating: float
     paypal: Optional[str]
+    confirm_password: str
 
     class Config:
         orm_mode = True

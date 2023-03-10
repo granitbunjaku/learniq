@@ -4,9 +4,10 @@ import Swiper from '../components/Swiper';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import { TContext } from '../context/TranslateContext';
+import { UserContext } from '../context/UserContext';
 
 const Home = () => {
-
+  const { user, setUser } = useContext(UserContext)
   const {t} = useContext(TContext)
 
   const stats = [
@@ -103,6 +104,8 @@ const Home = () => {
               </div>
             </div>
         </section>
+
+      {user && <>MR ROBOT</>}
         
       <div className='container w-full mt-20'>
         <h3 className='font-poppins text-lg px-12 mb-8'>{t('description.home.course_title')}</h3>
