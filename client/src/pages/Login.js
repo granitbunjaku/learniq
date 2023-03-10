@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import GoogleButton from 'react-google-button'
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
+
 
 const Login = () => {
-    const [ user, setUser ] = useState(null);
+    const { user, setUser } = useContext(UserContext)
     const [ profile, setProfile ] = useState([]);
     const [error, setError] = useState(null)
 
@@ -41,7 +43,17 @@ const Login = () => {
             "password": e.target.password.value
         })
         .then(res => {
-            localStorage.setItem("jwt", JSON.stringify(res.data.access_token))
+            localStorage.setItem("user", JSON.stringify({
+                "token": res.data.token.access_token,
+                "email": res.data.email,
+                "id": res.data.id
+            }))
+
+            setUser({
+                "token": res.data.token.access_token,
+                "email": res.data.email,
+                "id": res.data.id
+            })
             navigate("/")
         })
         .catch(e => {

@@ -45,7 +45,11 @@ def user_login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     logging_user = db.query(models.User).filter(models.User.email == user.email).first()
     if logging_user:
         if user.password == logging_user.password:
-            return signJWT(logging_user.id, logging_user.email)
+            return {
+                "token": signJWT(logging_user.id, logging_user.email), 
+                "email": logging_user.email,
+                "id": logging_user.id,
+                }
         raise HTTPException(400, "Wrong password")
     raise HTTPException(404, "Account doesn't exist")
 
@@ -76,7 +80,7 @@ async def get_user(id, db: Session = Depends(get_db)):
     user = db.get(models.User, id)
 
     if user:
-        return schemas.User.from_orm(user)
+        return { "user": user, "courses": user.user_courses}
     return f"User with id {id} doesn't exist"
 
 

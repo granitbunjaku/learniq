@@ -26,6 +26,7 @@ class User(BaseModel):
     phone_number: str
     role_id: Optional[int]
     paypal: Optional[str]
+    confirm_password: str
 
     class Config:
         orm_mode = True

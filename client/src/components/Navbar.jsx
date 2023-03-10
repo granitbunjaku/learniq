@@ -5,7 +5,8 @@ import { Icon } from '@iconify/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { TContext } from '../context/TranslateContext'
-import { UConext } from '../context/UserContext'
+import { UserContext } from '../context/UserContext'
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -13,8 +14,10 @@ function classNames(...classes) {
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [ user, setUser ] = useState(null)
     const {t, i18n, lngs} = useContext(TContext)
+    const { user, setUser } = useContext(UserContext)
+
+    console.log(user)
 
     const categories = [
       { name: t('description.navbar.web_development.title'), description: t('description.navbar.web_development.desc'), href: 'category/web_development', icon: "uil:programming-language" },
