@@ -30,10 +30,10 @@ async def create(description: str = Form(...), assignment_id: int = Form(...), d
         submission = models.Submissions(description=description, assignment_id=assignment_id)
 
         contents = await image.read()
-        
+
         file_path = os.path.join("course_assignments", f"{datetime.now()}{image.filename}")
-        
-        with open(file_path, "wb") as f: 
+
+        with open(file_path, "wb") as f:
             f.write(contents)
 
         submission.user_id = old_user.id

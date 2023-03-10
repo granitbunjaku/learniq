@@ -24,11 +24,20 @@ def get_db():
 # USER ENDPOINTS ----------
 @user.post("/user/create")
 def create_user(user: schemas.UserBase, db: Session = Depends(get_db)):
+
+    if not len(user.password) > 7:
+        raise HTTPException(400, "Password should be 8+ characters!")
+
+    if user.password != user.confirm_password:
+        raise HTTPException(400, "Password and Confirm Password must be the same!")
+
+    del user.confirm_password
+
     new_user = models.User(**user.dict())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return signJWT(new_user.id, new_user.email)
+    return "Successfully registered"
 
 
 @user.post("/user/login")
@@ -37,8 +46,8 @@ def user_login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     if logging_user:
         if user.password == logging_user.password:
             return signJWT(logging_user.id, logging_user.email)
-        return HTTPException(400, "Wrong password")
-    return HTTPException(404, "Account doesn't exist")
+        raise HTTPException(400, "Wrong password")
+    raise HTTPException(404, "Account doesn't exist")
 
 
 @user.get("/user/me")

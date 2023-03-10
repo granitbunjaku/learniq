@@ -15,9 +15,6 @@ const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [ user, setUser ] = useState(null)
     const {t, i18n, lngs} = useContext(TContext)
-    const {newuser} = useContext(UConext)
-
-    console.log(newuser)
 
     const categories = [
       { name: t('description.navbar.web_development.title'), description: t('description.navbar.web_development.desc'), href: 'category/web_development', icon: "uil:programming-language" },

@@ -23,9 +23,8 @@ class User(BaseModel):
     surname: str
     email: EmailStr
     about: Optional[str]
-    phone_number: int
-    role_id: int
-    rating: float
+    phone_number: str
+    role_id: Optional[int]
     paypal: Optional[str]
 
     class Config:
@@ -33,6 +32,7 @@ class User(BaseModel):
 
 class UserBase(User):
     password: str
+    confirm_password: str
 
 class UserEdit(BaseModel):
     name: Optional[str]
