@@ -102,3 +102,27 @@ class Chat(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Submissions(BaseModel):
+    image: str
+    description: Optional[str]
+    assignment_id: int
+
+    class Config:
+        orm_mode = True
+
+class UpdateSubmission(BaseModel):
+    image: Optional[str]
+    description: Optional[str]
+
+    class Config:
+        orm_mode = True
+
+class Videos(BaseModel):
+    video: str
+    description: Optional[str]
+    created_at: Optional[datetime.date]
+    course_id: int
+
+    class Config:
+        orm_mode = True
