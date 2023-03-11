@@ -26,7 +26,7 @@ async def create(description: str = Form(...),course_id: int = Form(...), db: Se
     decoded_user = decodeJWT(token)
     old_user = db.get(models.User, decoded_user['userID'])
 
-    if old_user.role_id == 0:
+    if old_user.role_id in [1,2]:
         _video = models.Videos(description=description,course_id=course_id)
 
         contents = await video.read()

@@ -34,7 +34,7 @@ const DashboardNav = () => {
             {
                 data.map(c => {
                     return (
-                    <Link to={`/dashboard/courses/1`}
+                    <Link to={`/dashboard/courses/${c.id}`}
                         onClick={() => setLink(c)}
                         className={classNames(
                         link == c

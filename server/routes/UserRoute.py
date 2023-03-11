@@ -49,6 +49,7 @@ def user_login(user: schemas.UserLogin, db: Session = Depends(get_db)):
             return {
                 "token": signJWT(logging_user.id, logging_user.email), 
                 "email": logging_user.email,
+                "name": logging_user.name,
                 "id": logging_user.id,
                 }
         raise HTTPException(400, "Wrong password")
@@ -79,6 +80,8 @@ async def delete_user(id, token: str = Depends(jwtBearer()), db: Session = Depen
 @user.get("/user/{id}")
 async def get_user(id, db: Session = Depends(get_db)):
     user = db.get(models.User, id)
+
+    del user.password;
 
     if user:
         return { "user": user, "courses": user.user_courses}

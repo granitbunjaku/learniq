@@ -15,11 +15,12 @@ const MentorAssignment = ({open, setOpen, id, setChanged, changed}) => {
     const cancelButtonRef = useRef(null)
     
     const createAssignment = async() => {
-        const data = {
-            "class_id" : id,
-            title,
+          const data = {
+            "course_id" : id,
+            "name": title,
             description,
-            "deadline": format(deadline, 'MM/dd/yyyy')
+            "points": 15,
+            "deadline": deadline
         };
 
         const res = await axios.post("http://127.0.0.1:8000/assignments/create", data, {

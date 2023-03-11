@@ -71,7 +71,7 @@ class Assignments(Base):
     name = Column(String(100), index=True)
     description = Column(String(250), index=True)
     points = Column(Float, index=True)
-    deadline = Column(DateTime, index=True)
+    deadline = Column(String, index=True)
     course_id = Column(Integer, ForeignKey("courses.id"))
 
     course = relationship("Courses", back_populates="assignments")

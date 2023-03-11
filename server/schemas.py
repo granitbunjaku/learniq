@@ -72,7 +72,7 @@ class Assignments(BaseModel):
     name: str
     description: str
     points: float
-    deadline: datetime.date
+    deadline: str
     course_id: int
 
     class Config:

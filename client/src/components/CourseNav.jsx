@@ -1,10 +1,12 @@
 import { Fragment, useState } from 'react';
 import { Transition, Popover } from '@headlessui/react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const CourseNav = () => {
   const [ link, setLink ] = useState('')
   const subjects = ['students', 'assignments', 'videos']
+
+  const {id} = useParams()
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -24,7 +26,7 @@ const CourseNav = () => {
                       {({ open }) => (
                         <>
                           <div className="relative flex">
-                            <Link to={`/dashboard/courses/1/${category}`}
+                            <Link to={`/dashboard/courses/${id}/${category}`}
                               onClick={() => setLink(category)}
                               className={classNames(
                                 link == category
