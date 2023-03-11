@@ -21,12 +21,12 @@ const Rte = ({setDescription, description}) => {
     return (
         <>
             <ReactQuill 
-            theme="snow" 
-            value={description}
-            onChange={setDescription} 
-            modules={modules}
-            className="h-2/4"
-            placeholder='Assignments Description...'
+                theme="snow" 
+                value={description}
+                onChange={setDescription} 
+                modules={modules}
+                className="h-2/4"
+                placeholder='Assignments Description...'
             />
         </>
     )
