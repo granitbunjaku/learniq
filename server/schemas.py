@@ -23,6 +23,7 @@ class User(BaseModel):
     surname: str
     email: EmailStr
     about: Optional[str]
+    image : Optional[str]
     phone_number: str
     role_id: Optional[int]
     paypal: Optional[str]
@@ -38,8 +39,8 @@ class UserBase(User):
 class UserEdit(BaseModel):
     name: Optional[str]
     surname: Optional[str]
-    email: Optional[EmailStr]
     about: Optional[str]
+    image : Optional[str]
     phone_number: Optional[int]
     role_id: Optional[int]
     rating: Optional[float]

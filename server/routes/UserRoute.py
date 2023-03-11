@@ -1,8 +1,9 @@
-from fastapi import APIRouter, FastAPI, HTTPException, Depends
+from fastapi import APIRouter, FastAPI, HTTPException, Depends, UploadFile, Form, File
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
-
+import os
+from datetime import datetime
 import models
 import schemas
 from auth.jwtbearer import jwtBearer
@@ -85,18 +86,26 @@ async def get_user(id, db: Session = Depends(get_db)):
 
 
 @user.put("/user/{id}")
-async def update_user(id, user: schemas.UserEdit, token: str = Depends(jwtBearer()), db: Session = Depends(get_db)):
+async def update_user(name: str = Form(...), surname: str = Form(...), about: str = Form(...), phone_number: str = Form(...), db: Session = Depends(get_db), token: str = Depends(jwtBearer()), image: UploadFile = File(...)):
     decoded_user = decodeJWT(token)
-    old_user = db.get(models.User, id)
+    old_user = db.get(models.User, decoded_user['userID'])
 
     if old_user:
-        if(old_user.id == decoded_user['userID']):
-            new_user = user.dict(exclude_unset=True)
-            for key, value in new_user.items():
-                setattr(old_user, key, value)
-            db.add(old_user)
-            db.commit()
-            db.refresh(old_user)
-            return old_user
-        return f"You must be logged in with this user to edit it!"
+        data = {"name":name, "surname": surname, "about": about, "phone_number": phone_number}
+        for key, value in data.items():
+            setattr(old_user, key, value)
+        
+        if image:
+            if old_user.image != "string":
+                os.remove(old_user.image)
+            contents = await image.read()
+            file_path = os.path.join("users_images", f"{datetime.now()}{image.filename}")
+            with open(file_path, "wb") as f:
+                f.write(contents)
+            old_user.image = file_path
+
+        db.add(old_user)
+        db.commit()
+        db.refresh(old_user)
+        return old_user
     return f"User doesn't exist"

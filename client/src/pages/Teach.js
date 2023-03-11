@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import CaseSlider from '../components/CaseSlider'
 import { TContext } from '../context/TranslateContext'
+import PaypalButton from '../components/PaypalButton'
 
 export const Teach = () => {
 

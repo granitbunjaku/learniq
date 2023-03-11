@@ -29,6 +29,7 @@ import { UserContext } from './context/UserContext';
 import PrivateRoutes from './pages/PrivateRoutes';
 import { CoursesContext } from './context/CoursesContext';
 import { SubcategoriesContext } from './context/SubcategoriesContext';
+import Chat from './pages/Chat';
 const queryClient = new QueryClient();
 
 
@@ -69,6 +70,7 @@ function App() {
                           <Route path='/become-mentor' element={<BecomeMentor />} />
                           <Route path='/settings' element={<PersonalSettings />} />
                           <Route path='/courses/create' element={<CreateCourse />} />
+                          <Route path='/chat/:id' element={<Chat />} />
                         </Route>
                         
                       </Route>
