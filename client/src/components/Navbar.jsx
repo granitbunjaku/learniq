@@ -20,21 +20,19 @@ const Navbar = () => {
     const { user, setUser } = useContext(UserContext)
 
   
-    const fetchData = async() => {
-        const res = await axios.get("http://localhost:8000/user/me", {
-            headers: { "Authorization": `Bearer ${user?.token}` }
-        })
+    // const fetchData = async() => {
+    //     const res = await axios.get("http://localhost:8000/user/me", {
+    //         headers: { "Authorization": `Bearer ${user?.token}` }
+    //     })
         
-        const data = res.data;
-        return data
-    }
+    //     const data = res.data;
+    //     return data
+    // }
 
-    const { data, error, isLoading } = useQuery("data", fetchData, {
-      enabled: !!user?.token
-    })
+    // const { data, error, isLoading } = useQuery("data", fetchData)
 
-    if(isLoading) return <>Loading..</>
-    if(error) return <>{error}</>
+    // if(isLoading) return <>Loading..</>
+    // if(error) return <>{error}</>
 
     return (
       <>
@@ -100,7 +98,7 @@ const Navbar = () => {
               <Menu as="div" className="relative ml-3">
                 <div>
                   <Menu.Button className="flex  rounded-full h-8 w-8 justify-center items-center font-bold text-white bg-gray-800 text-sm focus:outline-none ">
-                    {`${data?.name.slice(0,1)}${data?.surname.slice(0,1)}`}
+                    
                   </Menu.Button>
                 </div>
                 <Transition
@@ -116,7 +114,7 @@ const Navbar = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          to={`/profile/${data.id}`}
+                          to={`/profile/${user?.id}`}
                           className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                         >
                           {t('description.navbar.profile')}
