@@ -10,7 +10,6 @@ from routes.SubcategoryRoute import subcategory
 from routes.UserRoute import user
 from fastapi.middleware.cors import CORSMiddleware
 from routes.SubmissionRoute import submission
-from paypal.checkout import payment_routes
 from routes.VideoRoute import video
 
 app = FastAPI()
@@ -41,5 +40,4 @@ app.include_router(user)
 app.include_router(subcategory, prefix="/subcategories")
 app.include_router(course)
 app.include_router(assignment)
-app.include_router(payment_routes)
 app.include_router(submission, prefix='/submissions')
