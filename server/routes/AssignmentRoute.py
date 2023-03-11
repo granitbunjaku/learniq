@@ -52,6 +52,12 @@ def get_assignment(id, db: Session = Depends(get_db)):
     return HTTPException(404, f"Assignment with id : {id} doesn't exist!")
 
 
+@assignment.get("/course/{id}/assignments")
+def get_course_assignments(id, db: Session = Depends(get_db)):
+    assignments = db.query(models.Assignments).filter(models.Assignments.course_id == id).all()
+    return JSONResponse(content=jsonable_encoder(assignments))
+
+
 @assignment.put("/assignments/{id}")
 def update_assignment(id, assignment: schemas.AssignmentEdit,db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
     decoded_user = decodeJWT(token)
