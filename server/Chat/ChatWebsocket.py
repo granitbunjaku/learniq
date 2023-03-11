@@ -37,13 +37,21 @@ def chat_exists(db: Session, user1_id: int, user2_id: int):
 
 @chat.post("/chat/create")
 def create_chat(chat: schemas.Chat, db: Session = Depends(get_db)):
-    if not chat_exists(db, chat.user1, chat.user2):
+    chat_db = chat_exists(db, chat.user1, chat.user2)
+
+    if not chat_db:
         db_chat = models.Chat(**chat.dict())
         db.add(db_chat)
         db.commit()
         db.refresh(db_chat)
         return db_chat
-    return chat_exists(db, chat.user1, chat.user2)
+
+
+    messages = db.query(models.Messages).filter(
+        models.Messages.chat_id == chat_db.id
+    ).all()
+
+    return {"chat" : chat_db, "messages": messages}
 
 @chat.get("/chats", dependencies=[Depends(jwtBearer())])
 def get_chats(db: Session = Depends(get_db)):
