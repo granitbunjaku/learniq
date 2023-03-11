@@ -11,17 +11,21 @@ const PersonalSettings = () => {
     const [ about, setAbout ] = useState("")
     const [ phone, setPhone ] = useState("")
 
+
+    console.log(user?.token)
     const fetchData = async() => {
         const res = await axios.get("http://localhost:8000/user/me", {
             headers: { "Authorization": `Bearer ${user?.token}` }
         })
         
-        const data = res.data.name;
+        const data = res.data;
 
         setName(data.name)
         setSurname(data.surname)
         setAbout(data.about)
         setPhone(data.phone_number)
+
+        return data
     }
 
     const { data, error, isLoading } = useQuery('data', fetchData, {
@@ -31,7 +35,7 @@ const PersonalSettings = () => {
     if(isLoading) return <>Loading...</>
     if(error) return <>{error.message}</>
 
-
+    
     const handleUpdate = async e => {
         e.preventDefault();
         
