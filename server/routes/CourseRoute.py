@@ -1,11 +1,13 @@
 import os
 from datetime import datetime
+from os.path import isfile
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
+from fastapi.responses import FileResponse
 
 import models
 import schemas
@@ -35,18 +37,31 @@ async def create_course(title: str = Form(...), price: float = Form(...), about:
         course = models.Courses(title=title, price=price, about=about, category_id=category_id)
 
         contents = await file.read()
-        file_path = os.path.join("courseimages", f"{datetime.now()}{file.filename}")
+        filename = f"{datetime.now().strftime('%Y%m%d%H%M%S%f')}{file.filename}"
+        file_path = os.path.join("courseimages", filename)
         with open(file_path, "wb") as f:
             f.write(contents)
 
         course.owner_id = old_user.id
-        course.image = file_path
+        course.image = filename
         db.add(course)
         db.commit()
         db.refresh(course)
         return course
     return HTTPException(401, "You must be admin to create an course!")
 
+
+@course.get("/my/courses")
+def get_my_courses(db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
+    decoded_user = decodeJWT(token)
+    courses = db.query(models.Courses).filter(models.Courses.owner_id == decoded_user['userID'])
+
+    my_courses = []
+
+    for course in courses:
+        my_courses.append(course)
+
+    return my_courses
 
 @course.delete("/courses/{id}")
 def delete_course(id, db: Session = Depends(get_db), token: str = Depends(jwtBearer())):
@@ -55,7 +70,7 @@ def delete_course(id, db: Session = Depends(get_db), token: str = Depends(jwtBea
 
     if course:
         if course.owner_id == decoded_user['userID']:
-            os.remove(course.image)
+            os.remove(f"courseimages/{course.image}")
             db.delete(course)
             db.commit()
             return f"Course with id : {id} was successfully deleted!"
@@ -69,6 +84,11 @@ def get_courses(db: Session = Depends(get_db)):
     courses = db.query(models.Courses).all()
     return courses
 
+@course.get("/courses/image/{image}")
+async def get_image(image: str):
+    image_path = f"courseimages/{image}"
+    content_type = "image/png"  # adjust the media type based on your file type
+    return FileResponse(image_path, media_type=content_type)
 
 @course.get("/courses/{id}")
 def get_course(id, db: Session = Depends(get_db)):
@@ -77,7 +97,7 @@ def get_course(id, db: Session = Depends(get_db)):
     if not course:
         return HTTPException(404, f"Course with id : {id} doesn't exist!")
 
-    course.course_owner.password = "*******"
+    del course.course_owner.password
 
     data = [
         course,

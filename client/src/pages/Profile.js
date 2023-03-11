@@ -11,15 +11,12 @@ function Profile() {
 
     const fetchUser = async() => {
         const res = await axios.get(`http://localhost:8000/user/${id}`)
-        console.log(res.data)
         return res.data
     }
 
     const { data, error, isLoading } = useQuery(["user"], fetchUser)
 
     if(isLoading) return <>isLoading</>
-
-    console.log(data.courses)
 
     return (
         <div class="flex flex-row h-screen">
