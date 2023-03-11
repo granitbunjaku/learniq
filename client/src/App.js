@@ -44,6 +44,7 @@ function App() {
       setUser({
           "token": _user.token,
           "email": _user.email,
+          "name": _user.name,
           "id": _user.id
       })
     }

@@ -29,7 +29,6 @@ const Login = () => {
                 })
                 .then((res) => {
                     setProfile(res.data);
-                    console.log(res.data)
                 })
                 .catch((err) => console.log(err));
         } 
@@ -46,12 +45,14 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify({
                 "token": res.data.token.access_token,
                 "email": res.data.email,
+                "name": res.data.name,
                 "id": res.data.id
             }))
 
             setUser({
                 "token": res.data.token.access_token,
                 "email": res.data.email,
+                "name": res.data.name,
                 "id": res.data.id
             })
             navigate("/")
