@@ -5,9 +5,11 @@ import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import { TContext } from '../context/TranslateContext';
 import { UserContext } from '../context/UserContext';
+import { CContext } from '../context/CoursesContext';
 
 const Home = () => {
   const { user, setUser } = useContext(UserContext)
+  const { courses } = useContext(CContext)
   const {t} = useContext(TContext)
 
   const stats = [
