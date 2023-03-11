@@ -18,6 +18,7 @@ class User(Base):
     surname = Column(String(20), index=True)
     email = Column(String(50), index=True, unique=True)
     about = Column(String(250), index=True, nullable=True)
+    image = Column(String, index=True, nullable=True)
     phone_number = Column(String(10), index=True, unique=True)
     role_id = Column(Integer, ForeignKey("roles.id"), default=1)
     rating = Column(Float, index=True, default=0)

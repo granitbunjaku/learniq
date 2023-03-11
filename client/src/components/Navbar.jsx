@@ -6,6 +6,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { TContext } from '../context/TranslateContext'
 import { UserContext } from '../context/UserContext'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
 
 function classNames(...classes) {
@@ -17,14 +19,22 @@ const Navbar = () => {
     const {t, i18n, lngs} = useContext(TContext)
     const { user, setUser } = useContext(UserContext)
 
-    console.log(user)
+  
+    const fetchData = async() => {
+        const res = await axios.get("http://localhost:8000/user/me", {
+            headers: { "Authorization": `Bearer ${user?.token}` }
+        })
+        
+        const data = res.data;
+        return data
+    }
 
-    const categories = [
-      { name: t('description.navbar.web_development.title'), description: t('description.navbar.web_development.desc'), href: 'category/web_development', icon: "uil:programming-language" },
-      { name: t('description.navbar.business.title'), description: t('description.navbar.business.desc'), href: 'category/business', icon: "mdi:business-outline" },
-      { name: t('description.navbar.finance.title'), description: t('description.navbar.finance.desc'), href: 'category/finance_accounting', icon: "mdi:finance" },
-      { name: t('description.navbar.design.title'), description: t('description.navbar.design.desc'), href: 'category/arts_design', icon: "map:art-gallery" },
-    ]
+    const { data, error, isLoading } = useQuery("data", fetchData, {
+      enabled: !!user?.token
+    })
+
+    if(isLoading) return <>Loading..</>
+    if(error) return <>{error}</>
 
     return (
       <>
@@ -90,7 +100,7 @@ const Navbar = () => {
               <Menu as="div" className="relative ml-3">
                 <div>
                   <Menu.Button className="flex  rounded-full h-8 w-8 justify-center items-center font-bold text-white bg-gray-800 text-sm focus:outline-none ">
-                    JZ
+                    {`${data?.name.slice(0,1)}${data?.surname.slice(0,1)}`}
                   </Menu.Button>
                 </div>
                 <Transition
@@ -106,7 +116,7 @@ const Navbar = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          to='/profile'
+                          to={`/profile/${data.id}`}
                           className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                         >
                           {t('description.navbar.profile')}

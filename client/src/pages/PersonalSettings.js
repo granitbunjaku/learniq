@@ -13,19 +13,24 @@ const PersonalSettings = () => {
 
     const fetchData = async() => {
         const res = await axios.get("http://localhost:8000/user/me", {
-            headers: { Authorization: `Bearer ${user.token}` }
+            headers: { "Authorization": `Bearer ${user?.token}` }
         })
         
-        const data = res.data;
+        const data = res.data.name;
+
         setName(data.name)
         setSurname(data.surname)
         setAbout(data.about)
         setPhone(data.phone_number)
-
-        return data
     }
 
-    fetchData()
+    const { data, error, isLoading } = useQuery('data', fetchData, {
+        enabled: !!user?.token
+    })
+
+    if(isLoading) return <>Loading...</>
+    if(error) return <>{error.message}</>
+
 
     const handleUpdate = async e => {
         e.preventDefault();
@@ -33,12 +38,20 @@ const PersonalSettings = () => {
         const formData = new FormData(e.target); 
         const data = Object.fromEntries(formData.entries());
 
-        const res = await axios.put(`http://localhost:8000/user/${user?.id}`, data, {
-            headers: { Authorization: `Bearer ${user.token}` }
-        })
+        try {
+            const res = await axios.put(`http://localhost:8000/user/${user?.id}`, data, {
+                headers: { "Authorization": `Bearer ${user.token}` }
+            })
+
+            console.log(res)
+        } catch (error) {
+            console.log("ERROR: "+error.message)
+        }
+        
+        
     }
 
-
+    
   return (
     <div class="flex flex-row">
         <Sidebar />
@@ -68,6 +81,15 @@ const PersonalSettings = () => {
             <div class="bg-white shadow-md rounded-lg p-4 mb-6">
                 <h3 class="text-lg font-medium mb-2">Change Email</h3>
                 <form onSubmit={handleUpdate}>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-medium mb-2" for="image">Name</label>
+                        <input 
+                            class="w-full border-gray-400 border-2 p-2 rounded" 
+                            type="file" 
+                            name="image" 
+                            id="image" 
+                        />
+                    </div>
                     <div class="mb-6">
                         <label class="block text-gray-700 font-medium mb-2" for="name">Name</label>
                         <input 
