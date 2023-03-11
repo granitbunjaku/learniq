@@ -34,6 +34,11 @@ const Navbar = () => {
     // if(isLoading) return <>Loading..</>
     // if(error) return <>{error}</>
 
+    const logout = () => {
+      localStorage.removeItem("user")
+      setUser(null)
+    }
+
     return (
       <>
           <header className="bg-white border-b-[1px] border-gray-300">
@@ -135,6 +140,7 @@ const Navbar = () => {
                       {({ active }) => (
                         <span
                           className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          onClick={() => logout()}
                         >
                           {t('description.navbar.signout')}
                         </span>
